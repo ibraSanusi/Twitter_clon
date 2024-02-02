@@ -38,14 +38,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Retweet::class)]
     private Collection $retweets;
 
-    #[ORM\OneToMany(mappedBy: 'followed_id', targetEntity: Follower::class)]
+    #[ORM\OneToMany(mappedBy: 'follower', targetEntity: Follower::class)]
     private Collection $followers;
+
+    #[ORM\OneToMany(mappedBy: 'following', targetEntity: Follower::class)]
+    private $following;
 
     public function __construct()
     {
         $this->tweets = new ArrayCollection();
         $this->retweets = new ArrayCollection();
         $this->followers = new ArrayCollection();
+        $this->following = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -190,7 +194,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->followers->contains($follower)) {
             $this->followers->add($follower);
-            $follower->setFollowedId($this);
+            $follower->setFollower($this);
         }
 
         return $this;
@@ -200,11 +204,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->followers->removeElement($follower)) {
             // set the owning side to null (unless already changed)
-            if ($follower->getFollowedId() === $this) {
-                $follower->setFollowedId(null);
+            if ($follower->getFollower() === $this) {
+                $follower->setFollower(null);
             }
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Follower[]
+     */
+    public function getFollowing(): Collection
+    {
+        return $this->following;
     }
 }

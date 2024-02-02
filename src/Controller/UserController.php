@@ -25,7 +25,7 @@ class UserController extends AbstractController
             $currentDateTime = new \DateTime('now');
 
             // Setear el usuario que hace el seguimiento y el la fecha
-            $follower->setFollowingId($user);
+            $follower->setFollower($user);
             $follower->setFollowingDate($currentDateTime);
 
             $emi->persist($follower);
@@ -34,23 +34,41 @@ class UserController extends AbstractController
             return new Response('Se siguio correctamente');
         }
 
+        $username = $this->getUser();
+
         return $this->render('user/follow.html.twig', [
-            'controller_name' => 'UserController',
+            'username' => $username->getUserIdentifier(),
             'form' => $form
         ]);
     }
 
-    #[Route('/followed', name: 'app_followed')]
+    // Muestra los usuarios a los que sigue en usuario en sesion
+    #[Route('/following', name: 'app_following')]
+    public function showFollowings(UserRepository $ur): Response
+    {
+        $user = $ur->find($this->getUser());
+        $username = $user->getUsername();
+        $followingUsers = $user->getFollowers();
+
+        return $this->render('user/following.html.twig', [
+            'controller_name' => 'Siguiendo',
+            'username' => $username,
+            'followingUsers' => $followingUsers
+        ]);
+    }
+
+    // Muestra los seguidores del usuario en sesion
+    #[Route('/followers', name: 'app_followers')]
     public function showFollowers(UserRepository $ur): Response
     {
         $user = $ur->find($this->getUser());
         $username = $user->getUsername();
-        $followers = $user->getFollowers();
+        $userFollowers = $user->getFollowing();
 
         return $this->render('user/followers.html.twig', [
-            'controller_name' => 'UserController',
+            'controller_name' => 'Seguidores',
             'username' => $username,
-            'followers' => $followers
+            'userFollowers' => $userFollowers
         ]);
     }
 }

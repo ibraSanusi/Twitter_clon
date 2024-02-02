@@ -21,22 +21,21 @@
 		<h1>{{ controller_name }}! ✅</h1>
 
 		<strong>
-			A
 			{{ username}}
-			le siguen...✅</strong>
-		<ul>
-			{% if userFollowers is not empty %}
-				{% for user in userFollowers %}
-					{# Solo se muestra si el seguidor es distinto de el mismo #}
-					{% if user.follower.username != username %}
+			sigue a...✅</strong>
+		{% if followingUsers is not empty %}
+			<ul>
+				{% for user in followingUsers %}
+					{# Solo se muestra si el seguidor es distinto del que esta en sesion #}
+					{# {% if user.following.username != username %} #}
 						<li>
-							{{ user.follower.username }}
-						</li>
-					{% endif %}
+					{{ user.following.username }}
+				</li>
+					{# {% endif %} #}
 				{% endfor %}
-			{% else %}
-				<li>No hay seguidores.</li>
-			{% endif %}
-		</ul>
+			</ul>
+		{% else %}
+			No sigue a nadie.
+		{% endif %}
 	</div>
 {% endblock %}

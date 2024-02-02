@@ -15,10 +15,10 @@ class Follower
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'followers')]
-    private ?User $followedId = null;
+    private ?User $follower = null;
 
-    #[ORM\ManyToOne(inversedBy: 'followers')]
-    private ?User $followingId = null;
+    #[ORM\ManyToOne]
+    private ?User $following = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $followingDate = null;
@@ -28,26 +28,26 @@ class Follower
         return $this->id;
     }
 
-    public function getFollowedId(): ?User
+    public function getFollower(): ?User
     {
-        return $this->followedId;
+        return $this->follower;
     }
 
-    public function setFollowedId(?User $followedId): static
+    public function setFollower(?User $follower): static
     {
-        $this->followedId = $followedId;
+        $this->follower = $follower;
 
         return $this;
     }
 
-    public function getFollowingId(): ?User
+    public function getFollowing(): ?User
     {
-        return $this->followingId;
+        return $this->following;
     }
 
-    public function setFollowingId(?User $followingId): static
+    public function setFollowing(?User $following): static
     {
-        $this->followingId = $followingId;
+        $this->following = $following;
 
         return $this;
     }

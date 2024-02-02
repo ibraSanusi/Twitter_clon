@@ -24,7 +24,7 @@ security:
                 login_path: app_login
                 check_path: app_login
                 # Supuestamente te permite redirigir despues de haber iniciado sesion
-                default_target_path: app_register
+                default_target_path: app_following
                 always_use_default_target_path: true
 
             # activate different ways to authenticate

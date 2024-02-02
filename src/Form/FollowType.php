@@ -15,9 +15,9 @@ class FollowType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('followed_id', EntityType::class, [
+            ->add('following', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id',
+                'choice_label' => 'username',
             ])
             ->add('Follow', SubmitType::class);
     }
