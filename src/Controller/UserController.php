@@ -31,7 +31,7 @@ class UserController extends AbstractController
             $emi->persist($follower);
             $emi->flush();
 
-            return new Response('Se siguio correctamente');
+            return $this->redirectToRoute('app_following');
         }
 
         $username = $this->getUser();
@@ -69,6 +69,21 @@ class UserController extends AbstractController
             'controller_name' => 'Seguidores',
             'username' => $username,
             'userFollowers' => $userFollowers
+        ]);
+    }
+
+    // Mostrar los tweets de los usuarios a los que sigue el usuario de la sesion
+    #[Route('/tweets', name: 'app_following_tweets')]
+    public function showFollowingTweets(UserRepository $ur): Response
+    {
+        $user = $ur->find($this->getUser());
+        $username = $user->getUsername();
+        $followingUsers = $user->getFollowers();
+
+        return $this->render('user/followingTweets.html.twig', [
+            'controller_name' => 'Home tweets',
+            'username' => $username,
+            'followingUsers' => $followingUsers
         ]);
     }
 }
