@@ -17,11 +17,11 @@ class Like
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user_id = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'likes_count')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Tweet $tweet_id = null;
+    private ?Tweet $tweet = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $like_date = null;
@@ -33,24 +33,24 @@ class Like
 
     public function getUserId(): ?User
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?User $user_id): static
+    public function setUserId(?User $user): static
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
 
     public function getTweetId(): ?Tweet
     {
-        return $this->tweet_id;
+        return $this->tweet;
     }
 
-    public function setTweetId(?Tweet $tweet_id): static
+    public function setTweetId(?Tweet $tweet): static
     {
-        $this->tweet_id = $tweet_id;
+        $this->tweet = $tweet;
 
         return $this;
     }

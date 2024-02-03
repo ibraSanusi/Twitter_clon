@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Follower;
+use App\Entity\Like;
 use App\Form\FollowType;
+use App\Form\LikeType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -83,6 +85,38 @@ class UserController extends AbstractController
         return $this->render('user/followingTweets.html.twig', [
             'controller_name' => 'Home tweets',
             'username' => $username,
+            'followingUsers' => $followingUsers
+        ]);
+    }
+
+    // Dar likes a los tweets de los usuarios a los que sigue
+    #[Route('/like', name: 'app_like')]
+    public function likeTweet(UserRepository $ur, Request $request, EntityManagerInterface $emi): Response
+    {
+        // Formualario del like al tweet
+        $like = new Like();
+        $form = $this->createForm(LikeType::class, $like);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $currentDateTime = new \DateTime('now');
+            $user = $this->getUser();
+
+            $like->setUserId($user);
+            $like->setLikeDate($currentDateTime);
+
+            $emi->persist($like);
+            $emi->flush();
+        }
+
+        $user = $ur->find($this->getUser());
+        $username = $user->getUsername();
+        $followingUsers = $user->getFollowers();
+
+        return $this->render('user/likeTweet.html.twig', [
+            'controller_name' => 'Like tweets',
+            'username' => $username,
+            'form' => $form,
             'followingUsers' => $followingUsers
         ]);
     }
