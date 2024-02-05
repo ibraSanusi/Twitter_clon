@@ -1,0 +1,43 @@
+<main class="flex flex-row justify-center items-center h-screen">
+  <!-- Form section -->
+  <section class="w-full h-full p-10 flex flex-col items-center justify-center">
+    <!-- Form -->
+    <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+      <fieldset class="flex flex-col gap-3">
+        <!-- Form title -->
+        <legend
+          class="w-full flex flex-col mb-11 gap-3 justify-center items-center"
+        >
+          <h2 class="text-5xl">Registrate</h2>
+        </legend>
+
+        <label for="email">Email</label>
+        <input
+          class="bg-gray-200 p-2 rounded-md"
+          type="text"
+          id="email"
+          placeholder="Escribe tu email"
+          name="username"
+          ngModel
+        />
+        <label for="password">Contraseña</label>
+        <input
+          class="bg-gray-200 p-2 rounded-md"
+          type="password"
+          id="password"
+          placeholder="Escribe tu contraseña"
+          name="password"
+          ngModel
+        />
+
+        <button
+          class="bg-black text-white p-3 rounded-md"
+          type="submit"
+          id="submit"
+        >
+          Register
+        </button>
+      </fieldset>
+    </form>
+  </section>
+</main>
