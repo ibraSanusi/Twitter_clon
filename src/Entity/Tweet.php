@@ -26,10 +26,10 @@ class Tweet
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'tweet_id', targetEntity: Like::class)]
+    #[ORM\OneToMany(mappedBy: 'tweet', targetEntity: Like::class)]
     private Collection $likes_count;
 
-    #[ORM\OneToMany(mappedBy: 'tweet_id', targetEntity: Retweet::class)]
+    #[ORM\OneToMany(mappedBy: 'tweet', targetEntity: Retweet::class)]
     private Collection $retweets;
 
     public function __construct()
@@ -67,12 +67,12 @@ class Tweet
         return $this;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUserId(?User $user): static
+    public function setUser(?User $user): static
     {
         $this->user = $user;
 
@@ -91,7 +91,7 @@ class Tweet
     {
         if (!$this->likes_count->contains($likesCount)) {
             $this->likes_count->add($likesCount);
-            $likesCount->setTweetId($this);
+            $likesCount->setTweet($this);
         }
 
         return $this;
@@ -101,8 +101,8 @@ class Tweet
     {
         if ($this->likes_count->removeElement($likesCount)) {
             // set the owning side to null (unless already changed)
-            if ($likesCount->getTweetId() === $this) {
-                $likesCount->setTweetId(null);
+            if ($likesCount->getTweet() === $this) {
+                $likesCount->setTweet(null);
             }
         }
 
@@ -121,7 +121,7 @@ class Tweet
     {
         if (!$this->retweets->contains($retweet)) {
             $this->retweets->add($retweet);
-            $retweet->setTweetId($this);
+            $retweet->setTweet($this);
         }
 
         return $this;
@@ -131,8 +131,8 @@ class Tweet
     {
         if ($this->retweets->removeElement($retweet)) {
             // set the owning side to null (unless already changed)
-            if ($retweet->getTweetId() === $this) {
-                $retweet->setTweetId(null);
+            if ($retweet->getTweet() === $this) {
+                $retweet->setTweet(null);
             }
         }
 

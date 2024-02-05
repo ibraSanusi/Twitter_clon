@@ -102,11 +102,14 @@ class UserController extends AbstractController
             $currentDateTime = new \DateTime('now');
             $user = $this->getUser();
 
-            $like->setUserId($user);
+            $like->setUser($user);
+            $like->setTweet($form->get('tweetId')->getData());
             $like->setLikeDate($currentDateTime);
 
             $emi->persist($like);
             $emi->flush();
+
+            $this->redirectToRoute('app_following');
         }
 
         $user = $ur->find($this->getUser());

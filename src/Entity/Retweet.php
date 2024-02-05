@@ -16,10 +16,10 @@ class Retweet
 
     #[ORM\ManyToOne(inversedBy: 'retweets')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user_id = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'retweets')]
-    private ?Tweet $tweet_id = null;
+    private ?Tweet $tweet = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $retweet_date = null;
@@ -29,26 +29,26 @@ class Retweet
         return $this->id;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?User
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?User $user_id): static
+    public function setUser(?User $user): static
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getTweetId(): ?Tweet
+    public function getTweet(): ?Tweet
     {
-        return $this->tweet_id;
+        return $this->tweet;
     }
 
-    public function setTweetId(?Tweet $tweet_id): static
+    public function setTweet(?Tweet $tweet): static
     {
-        $this->tweet_id = $tweet_id;
+        $this->tweet = $tweet;
 
         return $this;
     }

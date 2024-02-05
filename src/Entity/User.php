@@ -32,10 +32,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Tweet::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Tweet::class)]
     private Collection $tweets;
 
-    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Retweet::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Retweet::class)]
     private Collection $retweets;
 
     #[ORM\OneToMany(mappedBy: 'follower', targetEntity: Follower::class)]
@@ -134,7 +134,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->tweets->contains($tweet)) {
             $this->tweets->add($tweet);
-            $tweet->setUserId($this);
+            $tweet->setUser($this);
         }
 
         return $this;
@@ -144,8 +144,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->tweets->removeElement($tweet)) {
             // set the owning side to null (unless already changed)
-            if ($tweet->getUserId() === $this) {
-                $tweet->setUserId(null);
+            if ($tweet->getUser() === $this) {
+                $tweet->setUser(null);
             }
         }
 
@@ -164,7 +164,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->retweets->contains($retweet)) {
             $this->retweets->add($retweet);
-            $retweet->setUserId($this);
+            $retweet->setUser($this);
         }
 
         return $this;
@@ -174,8 +174,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->retweets->removeElement($retweet)) {
             // set the owning side to null (unless already changed)
-            if ($retweet->getUserId() === $this) {
-                $retweet->setUserId(null);
+            if ($retweet->getUser() === $this) {
+                $retweet->setUser(null);
             }
         }
 

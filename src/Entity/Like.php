@@ -31,24 +31,24 @@ class Like
         return $this->id;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUserId(?User $user): static
+    public function setUser(?User $user): static
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getTweetId(): ?Tweet
+    public function getTweet(): ?Tweet
     {
         return $this->tweet;
     }
 
-    public function setTweetId(?Tweet $tweet): static
+    public function setTweet(?Tweet $tweet): static
     {
         $this->tweet = $tweet;
 

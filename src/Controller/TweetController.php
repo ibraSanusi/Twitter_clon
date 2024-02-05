@@ -31,7 +31,7 @@ class TweetController extends AbstractController
             $currentDateTime = new \DateTime('now');
 
             // Setear el usuario que hace la publicacion y la fecha
-            $tweet->setUserId($user);
+            $tweet->setUser($user);
             $tweet->setPublishDate($currentDateTime);
 
             $emi->persist($tweet);
