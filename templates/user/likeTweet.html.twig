@@ -29,8 +29,9 @@
       <ul>
         {% for tweet in user.following.tweets %}
         <li>
-          {{ tweet.content }} - [ id {{ tweet.id }} ]
+          {# {{ tweet.content }} - [ id {{ tweet.id }} ] #}
           {{ form_start(likeForms[tweet.id]) }}
+          {{ form_row(likeForms[tweet.id].tweet) }}
           {{ form_end(likeForms[tweet.id]) }}
         </li>
         {% endfor %}

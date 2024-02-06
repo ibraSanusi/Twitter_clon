@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Follower;
 use App\Entity\Like;
 use App\Form\FollowType;
+use App\Repository\TweetRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -92,7 +94,7 @@ class UserController extends AbstractController
     // Dar likes a los tweets de los usuarios a los que sigue
     // Controller con reentrada
     #[Route('/like', name: 'app_like')]
-    public function likeTweet(UserRepository $ur, Request $request, EntityManagerInterface $emi): Response
+    public function likeTweet(UserRepository $ur, Request $request, EntityManagerInterface $emi, TweetRepository $tr): Response
     {
         $user = $ur->find($this->getUser());
         $username = $user->getUsername();
@@ -104,11 +106,13 @@ class UserController extends AbstractController
             $tweets = $following->getFollowing()->getTweets();
             foreach ($tweets as $tweet) {
                 $like = new Like();
-                $like->setTweet($tweet); // Establecer el valor predeterminado para el campo tweet
 
-                $likeForm = $this->createFormBuilder($like)
+                $likeForm = $this->createFormBuilder()
                     ->setAction($this->generateUrl('app_like'))
                     ->setMethod('POST')
+                    ->add('tweet', HiddenType::class, [
+                        'data' => $tweet->getId()
+                    ])
                     ->add('like', SubmitType::class)
                     ->getForm();
 
@@ -118,6 +122,9 @@ class UserController extends AbstractController
                     $currentDateTime = new \DateTime('now');
                     $user = $this->getUser();
 
+                    $tweetId = $likeForm->get('tweet')->getData();
+
+                    $like->setTweet($tr->find($tweetId));
                     $like->setUser($user);
                     $like->setLikeDate($currentDateTime);
 
