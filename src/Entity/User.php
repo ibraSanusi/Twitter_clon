@@ -42,7 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $followers;
 
     #[ORM\OneToMany(mappedBy: 'following', targetEntity: Follower::class)]
-    private $following;
+    private Collection $following;
 
     public function __construct()
     {

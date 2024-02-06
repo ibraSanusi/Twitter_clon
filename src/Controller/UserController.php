@@ -5,10 +5,10 @@ namespace App\Controller;
 use App\Entity\Follower;
 use App\Entity\Like;
 use App\Form\FollowType;
-use App\Form\LikeType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -90,36 +90,51 @@ class UserController extends AbstractController
     }
 
     // Dar likes a los tweets de los usuarios a los que sigue
+    // Controller con reentrada
     #[Route('/like', name: 'app_like')]
     public function likeTweet(UserRepository $ur, Request $request, EntityManagerInterface $emi): Response
     {
-        // Formualario del like al tweet
-        $like = new Like();
-        $form = $this->createForm(LikeType::class, $like);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $currentDateTime = new \DateTime('now');
-            $user = $this->getUser();
-
-            $like->setUser($user);
-            $like->setTweet($form->get('tweetId')->getData());
-            $like->setLikeDate($currentDateTime);
-
-            $emi->persist($like);
-            $emi->flush();
-
-            $this->redirectToRoute('app_following');
-        }
-
         $user = $ur->find($this->getUser());
         $username = $user->getUsername();
         $followingUsers = $user->getFollowers();
 
+        $likeForms = [];
+
+        foreach ($followingUsers as $following) {
+            $tweets = $following->getFollowing()->getTweets();
+            foreach ($tweets as $tweet) {
+                $like = new Like();
+                $like->setTweet($tweet); // Establecer el valor predeterminado para el campo tweet
+
+                $likeForm = $this->createFormBuilder($like)
+                    ->setAction($this->generateUrl('app_like'))
+                    ->setMethod('POST')
+                    ->add('like', SubmitType::class)
+                    ->getForm();
+
+                $likeForm->handleRequest($request); // Procesar el formulario de like
+
+                if ($likeForm->isSubmitted() && $likeForm->isValid()) {
+                    $currentDateTime = new \DateTime('now');
+                    $user = $this->getUser();
+
+                    $like->setUser($user);
+                    $like->setLikeDate($currentDateTime);
+
+                    $emi->persist($like);
+                    $emi->flush();
+
+                    return $this->redirectToRoute('app_following'); // Redirigir después de procesar el like
+                }
+
+                $likeForms[$tweet->getId()] = $likeForm->createView();
+            }
+        }
+
         return $this->render('user/likeTweet.html.twig', [
             'controller_name' => 'Like tweets',
             'username' => $username,
-            'form' => $form,
+            'likeForms' => $likeForms,
             'followingUsers' => $followingUsers
         ]);
     }
