@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %} {% block title %}Hello TweetController! {%
+{% extends 'base.html.twig' %} {% block title %}Hello UserController! {%
 endblock %} {% block body %}
 <style>
   .example-wrapper {
@@ -21,17 +21,23 @@ endblock %} {% block body %}
 {% endif %}
 
 <div class="example-wrapper">
-  <h1>Hello {{ controller_name }}! ✅</h1>
+  <h1>{{ controller_name }}! ✅</h1>
 
-  <strong>Tweets de el usuario {{ username }}✅</strong>
+  <strong>
+    A
+    {{ username }}
+    le siguen...✅</strong
+  >
   <ul>
-    {% for tweet in tweets %}
+    {% if userFollowers is not empty %} {% for user in userFollowers %} {# Solo
+    se muestra si el seguidor es distinto de el mismo #} {% if
+    user.follower.username != username %}
     <li>
-      {{ tweet.content }}
-      -
-      {{ tweet.publishDate|date('Y-m-d H:i:s') }}
+      {{ user.follower.username }}
     </li>
-    {% endfor %}
+    {% endif %} {% endfor %} {% else %}
+    <li>No hay seguidores.</li>
+    {% endif %}
   </ul>
 </div>
 {% endblock %}

@@ -32,10 +32,14 @@ class Tweet
     #[ORM\OneToMany(mappedBy: 'tweet', targetEntity: Retweet::class)]
     private Collection $retweets;
 
+    #[ORM\OneToMany(mappedBy: 'tweet', targetEntity: Comment::class)]
+    private Collection $comments;
+
     public function __construct()
     {
         $this->likes_count = new ArrayCollection();
         $this->retweets = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -133,6 +137,36 @@ class Tweet
             // set the owning side to null (unless already changed)
             if ($retweet->getTweet() === $this) {
                 $retweet->setTweet(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setTweet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getTweet() === $this) {
+                $comment->setTweet(null);
             }
         }
 

@@ -4,10 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Tweet;
 use App\Form\TweetType;
-use App\Repository\TweetRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -46,7 +46,8 @@ class TweetController extends AbstractController
         ]);
     }
 
-    #[Route('/show', name: 'app_show')]
+    // Mostrar todos los tweets
+    #[Route('/showalltweets', name: 'app_showAllTweets')]
     public function show(UserRepository $ur): Response
     {
         $user = $ur->find($this->getUser());
@@ -57,6 +58,21 @@ class TweetController extends AbstractController
             'controller_name' => 'TweetController',
             'username' => $username,
             'tweets' => $tweets,
+        ]);
+    }
+
+    // Mostrar los tweets de los usuarios a los que sigue el usuario de la sesion
+    #[Route('/tweets', name: 'app_following_tweets')]
+    public function showFollowingTweets(UserRepository $ur): Response
+    {
+        $user = $ur->find($this->getUser());
+        $username = $user->getUsername();
+        $followingUsers = $user->getFollowers();
+
+        return $this->render('user/followingTweets.html.twig', [
+            'controller_name' => 'Home tweets',
+            'username' => $username,
+            'followingUsers' => $followingUsers
         ]);
     }
 }

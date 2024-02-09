@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %} {% block title %}Hello UserController!{% endblock
+%} {% block body %}
+<style>
+  .example-wrapper {
+    margin: 1em auto;
+    max-width: 800px;
+    width: 95%;
+    font: 18px / 1.5 sans-serif;
+  }
+
+  .example-wrapper code {
+    background: #f5f5f5;
+    padding: 2px 6px;
+  }
+</style>
+
+{% if app.user %}
+<div class="mb-3">
+  You are logged in as {{ app.user.userIdentifier }},
+  <a href="{{ path('app_logout') }}">Logout</a>
+</div>
+{% endif %}
+
+<div class="example-wrapper">
+  <h1>{{ controller_name }}! ✅</h1>
+
+  <strong>Bienvenido {{ username }} ✅</strong>
+
+  <h2>Tweets</h2>
+  {% if followingUsers is not empty %}
+  <ul>
+    {% for user in followingUsers %}
+    <li>
+      {{ user.following.username }}
+      {% if user.following.tweets is not empty %}
+      <ul>
+        {% for tweet in user.following.tweets %}
+        <li>
+          {{ tweet.content }} - [ id {{ tweet.id }} ] -
+          {{ tweet.likesCount | length }}
+          {{ form_start(likeForms[tweet.id]) }}
+          {{ form_end(likeForms[tweet.id]) }}
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %} No tiene tweets. {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %} No sigue a nadie. {% endif %}
+</div>
+
+{% endblock %}

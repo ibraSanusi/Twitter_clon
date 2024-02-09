@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %} {% block title %}Hello TweetController! {%
+{% extends 'base.html.twig' %} {% block title %}Hello UserController! {%
 endblock %} {% block body %}
 <style>
   .example-wrapper {
@@ -21,17 +21,8 @@ endblock %} {% block body %}
 {% endif %}
 
 <div class="example-wrapper">
-  <h1>Hello {{ controller_name }}! ✅</h1>
+  <h1>Hello {{ username }}! ✅</h1>
 
-  <strong>Tweets de el usuario {{ username }}✅</strong>
-  <ul>
-    {% for tweet in tweets %}
-    <li>
-      {{ tweet.content }}
-      -
-      {{ tweet.publishDate|date('Y-m-d H:i:s') }}
-    </li>
-    {% endfor %}
-  </ul>
+  {{ form(form) }}
 </div>
 {% endblock %}
