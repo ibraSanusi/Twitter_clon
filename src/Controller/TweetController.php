@@ -69,7 +69,7 @@ class TweetController extends AbstractController
         $username = $user->getUsername();
         $followingUsers = $user->getFollowers();
 
-        return $this->render('user/followingTweets.html.twig', [
+        return $this->render('tweet/followingTweets.html.twig', [
             'controller_name' => 'Home tweets',
             'username' => $username,
             'followingUsers' => $followingUsers

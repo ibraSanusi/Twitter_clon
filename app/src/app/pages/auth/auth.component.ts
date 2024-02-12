@@ -15,10 +15,25 @@ export class AuthComponent {
 
   onSubmit(form: NgForm) {
     let client = form.value;
+
     console.log(client);
-    // console.log(this.authService.login(client));
-    return this.authService.post(client).subscribe((res) => {
-      console.log(res);
-    });
+
+    const defaultValues = {
+      username: 'isanu227',
+      password: 'Idele227',
+    };
+
+    console.log(defaultValues);
+    // console.log(this.authService.login(client, 'angular/login'));
+    return this.authService
+      .login(defaultValues, 'api/login')
+      .subscribe((res) => {
+        console.log(res);
+
+        const data = res.data;
+        if (data) {
+          this.router.navigate(['/home']);
+        }
+      });
   }
 }

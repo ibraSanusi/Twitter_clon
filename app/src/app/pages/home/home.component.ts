@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
+import { TweetService } from '../../shared/services/tweet.service';
 
 @Component({
   selector: 'app-home',
@@ -8,15 +8,28 @@ import { Router } from '@angular/router';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private tweetService: TweetService, private router: Router) {}
 
   ngOnInit(): void {
     this.getTweets();
   }
 
   getTweets() {
-    return this.authService.getTweets('angular').subscribe((res) => {
+    const sessionId = this.getSessionIdFromCookie();
+    if (!sessionId) return null;
+
+    console.log('Session ID => ' + sessionId);
+
+    return this.tweetService.getTweets('api/tweet').subscribe((res) => {
       console.log(res);
     });
+  }
+
+  getSessionIdFromCookie(): string | null {
+    const sessionIdCookie = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('PHPSESSID='));
+
+    return sessionIdCookie ? sessionIdCookie.split('=')[1] : null;
   }
 }

@@ -16,10 +16,19 @@ export class AuthService {
       'Content-Type': 'application/json',
     });
 
-    return this.http.post(this.apiUrl, body, { headers });
+    return this.http.post<any>(this.apiUrl, body, { headers });
   }
 
-  getTweets(path: string): Observable<IUser> {
-    return this.http.get<any>(`${this.apiUrl}${path}`);
+  login(body: IUser, path: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json' as const,
+      Accept: 'application/json' as const,
+    });
+
+    return this.http.post(`${this.apiUrl}${path}`, body, {
+      headers,
+      // withCredentials: true,
+      // responseType: 'json' as const,
+    });
   }
 }
