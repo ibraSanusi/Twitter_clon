@@ -27,8 +27,8 @@ export class AuthService {
 
     return this.http.post(`${this.apiUrl}${path}`, body, {
       headers,
-      // withCredentials: true,
-      // responseType: 'json' as const,
+      withCredentials: true,
+      responseType: 'json' as const,
     });
   }
 }
