@@ -1,0 +1,35 @@
+.left-section {
+    min-height: 100vh;
+}
+
+.center-section {
+    min-height: 100vh;
+}
+
+.right-section {
+    min-height: 100vh;
+}
+
+.menu-options li {
+    list-style: none;
+}
+
+.menu-options {
+    padding: 0px;
+}
+
+.left-section-content {
+    min-width: 240px;
+}
+
+main {
+    min-height: 100vh;
+    min-width: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    color: white;
+}
+
+textarea {
+    resize: none;
+}

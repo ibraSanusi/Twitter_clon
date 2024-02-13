@@ -1,22 +1,25 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../../shared/services/auth.service';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { TweetService } from '../../shared/services/tweet.service';
+import { Tweet, TweetResponse } from '../../shared/interfaces/tweet.interface';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+  styleUrls: ['./home.component.css'], // Nota: el nombre de esta propiedad es styleUrls en lugar de styleUrl
 })
 export class HomeComponent {
-  constructor(private authService: AuthService, private router: Router) {}
+  tweets: Tweet[] = [];
+
+  constructor(private tweetService: TweetService, private router: Router) {}
 
   ngOnInit(): void {
     this.getTweets();
   }
 
   getTweets() {
-    return this.authService.getTweets('angular').subscribe((res) => {
-      console.log(res);
+    this.tweetService.getTweets('api/tweet').subscribe((res: TweetResponse) => {
+      this.tweets = res.data;
     });
   }
 }

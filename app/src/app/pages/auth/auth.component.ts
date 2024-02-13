@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../shared/services/auth.service';
+import { IUser } from '../../shared/interfaces/user.interface';
+import { NgForm } from '@angular/forms';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-auth',
+  selector: 'app-home',
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css',
 })
@@ -13,12 +15,23 @@ export class AuthComponent {
 
   ngOnInit(): void {}
 
-  onSubmit(form: NgForm) {
-    let client = form.value;
-    console.log(client);
-    // console.log(this.authService.login(client));
-    return this.authService.post(client).subscribe((res) => {
-      console.log(res);
-    });
+  login() {
+    const defaultSettings: IUser = {
+      username: 'isanu227',
+      password: 'Idele227',
+    };
+
+    console.log(defaultSettings);
+
+    return this.authService
+      .login(defaultSettings, 'api/login')
+      .subscribe((res) => {
+        console.log(res);
+
+        const data = res.data;
+        if (data) {
+          this.router.navigate(['/home']);
+        }
+      });
   }
 }
