@@ -1,0 +1,23 @@
+<!-- Right section -->
+<section class="flex flex-col gap-4 right-section py-2 px-4">
+  <div class="w-[305px] h-full flex flex-col gap-5">
+    <nav
+      class="w-full h-[35px] flex flex-row items-center bg-gray-500 rounded-md"
+    >
+      <i class="p-3">
+        <app-search-svg></app-search-svg>
+      </i>
+      <input
+        class="bg-transparent w-full py-2 pr-2 focus:outline-none"
+        type="search"
+        placeholder="Busca lo que quieras en Radio patio"
+      />
+    </nav>
+
+    <h2 class="text-xl w-full">Echa un vistazo a estos perfiles</h2>
+    <!-- Recomendated user card -->
+    <article class="w-full">
+      <app-user-recomendated-card></app-user-recomendated-card>
+    </article>
+  </div>
+</section>
