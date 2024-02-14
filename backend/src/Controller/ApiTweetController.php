@@ -14,15 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ApiTweetController extends AbstractController
 {
-<<<<<<< HEAD
-    // Mostrar todos los tweets
-    #[Route('/api/tweet', name: 'app_api_tweet', methods: ['GET'])]
-    public function getTweets(UserRepository $userRepository, Security $security): JsonResponse
-=======
     // Mostrar todos los tweets del usuario en sesion
     #[Route('/api/tweets', name: 'app_api_tweet', methods: ['GET'])]
     public function getOwnTweets(UserRepository $userRepository, Security $security): JsonResponse
->>>>>>> 03b74d4
     {
         // Obtener el usuario autenticado
         $user = $security->getUser();
@@ -50,8 +44,6 @@ class ApiTweetController extends AbstractController
         // Devolver una respuesta con los tweets del usuario
         return new JsonResponse(['success' => true, 'data' => $userTweets]);
     }
-<<<<<<< HEAD
-=======
 
     // Mostrar todos los tweets del usuario a los que sigue el usuario en sesion
     #[Route('/api/following/tweets', name: 'app_api_following_tweet', methods: ['GET'])]
@@ -78,7 +70,7 @@ class ApiTweetController extends AbstractController
                     'id' => $tweet->getId(),
                     'content' => $tweet->getContent(),
                     'publish_date' => $tweet->getPublishDate()->format('Y-m-d H:i:s'),
-                    'author' => $username
+                    'author' => $tweet->getUser()->getUsername()
                 ];
             }
         }
@@ -86,5 +78,4 @@ class ApiTweetController extends AbstractController
         // Devolver una respuesta con los tweets del usuario
         return new JsonResponse(['success' => true, 'data' => $followingTweets]);
     }
->>>>>>> 03b74d4
 }

@@ -25,9 +25,6 @@ export class AuthService {
       Accept: 'application/json' as const,
     });
 
-<<<<<<< HEAD
-    return this.http.post(`${this.apiUrl}${path}`, body, {
-=======
     return this.http.post<any>(`${this.apiUrl}${path}`, body, {
       headers,
       withCredentials: true,
@@ -42,7 +39,6 @@ export class AuthService {
     });
 
     return this.http.post<any>(`${this.apiUrl}${path}`, {
->>>>>>> 03b74d4
       headers,
       withCredentials: true,
       responseType: 'json' as const,
