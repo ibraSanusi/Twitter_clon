@@ -31,9 +31,9 @@ security:
         username_path: username
         password_path: password
       logout:
-        path: app_logout
+        path: app_api_logout
         # where to redirect after logout
-        # target: app_any_route
+        target: app_api_res
 
       remember_me:
         secret: "%kernel.secret%"

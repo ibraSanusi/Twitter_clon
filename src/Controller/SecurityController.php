@@ -25,10 +25,10 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route('/logout', name: 'app_logout')]
-    public function logout(): Response
-    {
-        // Este método nunca se ejecutará ya que Symfony manejará automáticamente el cierre de sesión
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
-    }
+    // #[Route('/logout', name: 'app_logout')]
+    // public function logout(): Response
+    // {
+    //     // Este método nunca se ejecutará ya que Symfony manejará automáticamente el cierre de sesión
+    //     throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    // }
 }

@@ -15,7 +15,9 @@ export class AuthComponent {
 
   ngOnInit(): void {}
 
-  login() {
+  login(ngForm: NgForm) {
+    const formValue = ngForm.value;
+
     const defaultSettings: IUser = {
       username: 'isanu227',
       password: 'Idele227',
@@ -23,15 +25,13 @@ export class AuthComponent {
 
     console.log(defaultSettings);
 
-    return this.authService
-      .login(defaultSettings, 'api/login')
-      .subscribe((res) => {
-        console.log(res);
+    return this.authService.login(formValue, 'api/login').subscribe((res) => {
+      console.log(res);
 
-        const data = res.data;
-        if (data) {
-          this.router.navigate(['/home']);
-        }
-      });
+      const data = res.data;
+      if (data) {
+        this.router.navigate(['/home']);
+      }
+    });
   }
 }

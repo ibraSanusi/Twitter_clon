@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { TweetService } from '../../shared/services/tweet.service';
 import { Tweet, TweetResponse } from '../../shared/interfaces/tweet.interface';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -11,15 +12,29 @@ import { Tweet, TweetResponse } from '../../shared/interfaces/tweet.interface';
 export class HomeComponent {
   tweets: Tweet[] = [];
 
-  constructor(private tweetService: TweetService, private router: Router) {}
+  constructor(
+    private tweetService: TweetService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    this.getTweets();
+    this.getFollowingTweets();
   }
 
   getTweets() {
-    this.tweetService.getTweets('api/tweet').subscribe((res: TweetResponse) => {
-      this.tweets = res.data;
-    });
+    this.tweetService
+      .getTweets('api/tweets')
+      .subscribe((res: TweetResponse) => {
+        this.tweets = res.data;
+      });
+  }
+
+  getFollowingTweets() {
+    this.tweetService
+      .getTweets('api/following/tweets')
+      .subscribe((res: TweetResponse) => {
+        this.tweets = res.data;
+      });
   }
 }

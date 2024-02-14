@@ -20,6 +20,13 @@ import { SearchSVGComponent } from './components/svg/search-svg/search-svg.compo
 import { StarSVGComponent } from './components/svg/star-svg/star-svg.component';
 import { SettingsSVGComponent } from './components/svg/settings-svg/settings-svg.component';
 import { ProfileSVGComponent } from './components/svg/profile-svg/profile-svg.component';
+import { UserRecomendatedCardComponent } from './components/user-recomendated-card/user-recomendated-card.component';
+import { LeftSectionComponent } from './components/left-section/left-section.component';
+import { CenterSectionComponent } from './components/center-section/center-section.component';
+import { RightSectionComponent } from './components/right-section/right-section.component';
+import { CommentIconComponent } from './components/svg/comment-icon/comment-icon.component';
+import { LikeIconComponent } from './components/svg/like-icon/like-icon.component';
+import { RetweetIconComponent } from './components/svg/retweet-icon/retweet-icon.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +35,13 @@ import { ProfileSVGComponent } from './components/svg/profile-svg/profile-svg.co
     HomeComponent,
     LandingComponent,
     RegisterComponent,
+    UserRecomendatedCardComponent,
+    LeftSectionComponent,
+    CenterSectionComponent,
+    RightSectionComponent,
+    CommentIconComponent,
+    LikeIconComponent,
+    RetweetIconComponent,
   ],
   imports: [
     BrowserModule,
