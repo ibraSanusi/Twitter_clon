@@ -25,7 +25,24 @@ export class AuthService {
       Accept: 'application/json' as const,
     });
 
+<<<<<<< HEAD
     return this.http.post(`${this.apiUrl}${path}`, body, {
+=======
+    return this.http.post<any>(`${this.apiUrl}${path}`, body, {
+      headers,
+      withCredentials: true,
+      responseType: 'json' as const,
+    });
+  }
+
+  logout(path: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json' as const,
+      Accept: 'application/json' as const,
+    });
+
+    return this.http.post<any>(`${this.apiUrl}${path}`, {
+>>>>>>> 03b74d4
       headers,
       withCredentials: true,
       responseType: 'json' as const,

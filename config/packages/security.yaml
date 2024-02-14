@@ -26,6 +26,7 @@ security:
     main:
       lazy: true
       provider: app_user_provider
+<<<<<<< HEAD
       # form_login:
       #   #"app_login" is the name of the route created previously
       #   login_path: app_login
@@ -35,13 +36,23 @@ security:
       #   always_use_default_target_path: true
       json_login:
         # api_login is a route we will create below
+=======
+      form_login:
+        #"app_login" is the name of the route created previously
+        login_path: app_login
+        check_path: app_login
+        # Supuestamente te permite redirigir despues de haber iniciado sesion
+        default_target_path: app_following
+        always_use_default_target_path: true
+      json_login:
+>>>>>>> 03b74d4
         check_path: app_api_login
         username_path: username
         password_path: password
       logout:
-        path: app_logout
+        path: app_api_logout
         # where to redirect after logout
-        # target: app_any_route
+        target: app_api_res
 
       remember_me:
         secret: "%kernel.secret%"

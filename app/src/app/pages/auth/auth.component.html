@@ -15,7 +15,7 @@
     </header>
 
     <!-- Form -->
-    <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+    <form (ngSubmit)="login(form)" #form="ngForm">
       <fieldset class="flex flex-col gap-3">
         <!-- Form title -->
         <legend
@@ -30,9 +30,15 @@
         <label for="email">Email</label>
         <input
           class="bg-gray-200 p-2 rounded-md"
+<<<<<<< HEAD
           type="text"
           id="email"
           placeholder="Escribe tu username"
+=======
+          type="email"
+          id="username"
+          placeholder="Escribe tu email"
+>>>>>>> 03b74d4
           name="username"
           ngModel
         />

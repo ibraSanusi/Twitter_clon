@@ -4,8 +4,21 @@ framework:
   #csrf_protection: true
 
   # Note that the session will be started ONLY if you read or write from it.
+<<<<<<< HEAD
   session: true
 
+=======
+  session:
+    cookie_samesite: "none"
+    cookie_secure: true
+
+  # http_client:
+  #   scoped_clients:
+  #     example_api:
+  #       base_uri: "http://localhost:4200/"
+  #       # HTTP Basic authentication
+  #       auth_basic: "the-username:the-password"
+>>>>>>> 03b74d4
   #esi: true
   #fragments: true
 

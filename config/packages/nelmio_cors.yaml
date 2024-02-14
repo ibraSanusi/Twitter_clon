@@ -1,6 +1,10 @@
 nelmio_cors:
   defaults:
     allow_credentials: true
+<<<<<<< HEAD
+=======
+    origin_regex: true
+>>>>>>> 03b74d4
     allow_origin: ["*"]
     allow_headers: ["Content-Type", "Authorization"]
     allow_methods: ["GET", "OPTIONS", "POST", "PUT", "DELETE"]
