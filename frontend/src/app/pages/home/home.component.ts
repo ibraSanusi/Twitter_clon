@@ -24,7 +24,7 @@ export class HomeComponent {
 
   getTweets() {
     this.tweetService
-      .getTweets('api/tweets')
+      .getTweets('following/tweets')
       .subscribe((res: TweetResponse) => {
         this.tweets = res.data;
       });

@@ -9,7 +9,7 @@ import { LandingComponent } from './pages/landing/landing.component';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './pages/register/register.component';
-import { FollowingCardComponent } from './components/following-card/following-card.component';
+import { TweetCardComponent } from './components/tweet-card/tweet-card.component';
 import { TrendComponent } from './components/trend/trend.component';
 import { ImageSVGComponent } from './components/svg/image-svg/image-svg.component';
 import { SmileSVGComponent } from './components/svg/smile-svg/smile-svg.component';
@@ -27,6 +27,8 @@ import { RightSectionComponent } from './components/right-section/right-section.
 import { CommentIconComponent } from './components/svg/comment-icon/comment-icon.component';
 import { LikeIconComponent } from './components/svg/like-icon/like-icon.component';
 import { RetweetIconComponent } from './components/svg/retweet-icon/retweet-icon.component';
+import { SecretoSVGComponent } from './components/svg/secreto-svg/secreto-svg.component';
+import { PostSectionComponent } from './components/post-section/post-section.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { RetweetIconComponent } from './components/svg/retweet-icon/retweet-icon
     CommentIconComponent,
     LikeIconComponent,
     RetweetIconComponent,
+    TweetCardComponent,
+    PostSectionComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +53,6 @@ import { RetweetIconComponent } from './components/svg/retweet-icon/retweet-icon
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    FollowingCardComponent,
     TrendComponent,
     ImageSVGComponent,
     SmileSVGComponent,
@@ -60,6 +63,7 @@ import { RetweetIconComponent } from './components/svg/retweet-icon/retweet-icon
     StarSVGComponent,
     SettingsSVGComponent,
     ProfileSVGComponent,
+    SecretoSVGComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
