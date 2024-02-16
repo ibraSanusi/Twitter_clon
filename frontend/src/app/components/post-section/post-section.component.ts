@@ -23,18 +23,23 @@ export class PostSectionComponent {
   }
 
   postTweet() {
-    // const tweet: TweetContent = {
-    //   content: 'Primer tweet desde angular.',
-    // };
     const textarea = this.postTextarea.nativeElement;
+    const tweetContent = textarea.value.trim();
+
+    // Verificar si el contenido del tweet está vacío o nulo
+    if (!tweetContent) {
+      console.log('El contenido del tweet está vacío');
+      return; // No hagas nada si el contenido del tweet está vacío
+    }
+
     const tweet: TweetContent = {
-      content: textarea.value,
+      content: tweetContent,
     };
 
-    // console.log(tweet);
-
-    this.tweetService.postTweet(tweet, 'api/post/tweet').subscribe((res) => {
+    // Realizar la publicación del tweet
+    this.tweetService.post(tweet, 'api/post/tweet').subscribe((res) => {
       console.log(res);
+      textarea.value = ''; // Limpiar el contenido del textarea después de publicar el tweet
     });
   }
 }

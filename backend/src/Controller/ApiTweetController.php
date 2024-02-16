@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Tweet;
 use App\Entity\User;
+use App\Repository\LikeRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,8 +18,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApiTweetController extends AbstractController
 {
     // Mostrar todos los tweets del usuario a los que sigue el usuario en sesion
+    // Se debe devolver un campo likeed que indique si ese tweet ya ha sido likeado o no por el usuario en sesion
+    // Este campo tendra el identificador del usuario
     #[Route('/following/tweets', name: 'app_api_following_tweet', methods: ['GET'])]
-    public function getFollowingTweets(Security $security): JsonResponse
+    public function getFollowingTweets(Security $security, LikeRepository $lr): JsonResponse
     {
         // Obtener el usuario autenticado
         $user = $security->getUser();
@@ -34,7 +37,7 @@ class ApiTweetController extends AbstractController
         foreach ($followingUsers as $fUser) {
             $tweets = $fUser->getFollowing()->getTweets();
             foreach ($tweets as $tweet) {
-                $followingTweets[] = $this->transformTweet($tweet);
+                $followingTweets[] = $this->transformTweet($tweet, $user->getId(), $lr);
             }
         }
 
@@ -44,7 +47,7 @@ class ApiTweetController extends AbstractController
 
     // Devuelve todos los tweets del usuario en sesion
     #[Route('/all/tweets', name: 'app_all_tweets', methods: ['GET'])]
-    public function getOwnTweets(UserRepository $ur): Response
+    public function getOwnTweets(UserRepository $ur, LikeRepository $lr): Response
     {
         // Verificar si el usuario está autenticado
         if (!$this->getUser() instanceof User) {
@@ -57,14 +60,14 @@ class ApiTweetController extends AbstractController
         $json_tweets = [];
         // Convertir tweets en respuesta de tipo json
         foreach ($tweets as $tweet) {
-            $json_tweets[] = $this->transformTweet($tweet);
+            $json_tweets[] = $this->transformTweet($tweet, $user->getId(), $lr);
         }
 
         return new JsonResponse(['success' => true, 'data' => $json_tweets]);
     }
 
     // Transforma la informacion de un tweet en json
-    public function transformTweet($tweet): array
+    public function transformTweet(Tweet $tweet, int $userId, LikeRepository $lr): array
     {
         // Sacar los retweets del tweet
         $retweets = [];
@@ -77,12 +80,16 @@ class ApiTweetController extends AbstractController
             ];
         }
 
+        // Hay que comprobar si el usuario en sesion ha dado like al tweet
+        $isLiked = $lr->isLiked($userId, $tweet->getId());
+
         $json_tweets = [
             'id' => $tweet->getId(),
             'content' => $tweet->getContent(),
             'author' => $tweet->getUser()->getUsername(),
             'publishDate' => $tweet->getPublishDate()->format('Y-m-d H:i:s'),
             'retweets' => $retweets,
+            'liked' => $isLiked,
             'likesCount' => count($tweet->getLikesCount()),
         ];
 

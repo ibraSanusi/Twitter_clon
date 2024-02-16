@@ -2,11 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IUser } from '../interfaces/user.interface';
 import { Observable } from 'rxjs';
-import {
-  Tweet,
-  TweetContent,
-  TweetResponse,
-} from '../interfaces/tweet.interface';
+import { Like, TweetResponse } from '../interfaces/tweet.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -16,13 +12,13 @@ export class TweetService {
 
   constructor(private http: HttpClient) {}
 
-  getTweets(path: string): Observable<any> {
+  get(path: string): Observable<any> {
     return this.http.get<TweetResponse>(`${this.apiUrl}${path}`, {
       withCredentials: true,
     });
   }
 
-  postTweet(body: TweetContent, path: string): Observable<any> {
+  post(body: any, path: string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json' as const,
       Accept: 'application/json' as const,

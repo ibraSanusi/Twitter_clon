@@ -41,8 +41,8 @@
       </button>
 
       <!-- Like button -->
-      <button>
-        <app-like-icon />
+      <button (click)="likeTweet(tweet.id)">
+        <app-like-icon [liked]="tweet.liked" />
       </button>
 
       <!-- Retweet -->

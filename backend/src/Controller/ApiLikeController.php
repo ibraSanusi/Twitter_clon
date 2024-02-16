@@ -17,7 +17,7 @@ class ApiLikeController extends AbstractController
 {
     // Dar like a un tweet
     #[Route('/like/tweet', name: 'app_like_tweet', methods: ['POST'])]
-    public function likeTweet(UserRepository $ur, Request $request, EntityManagerInterface $emi, TweetRepository $tr): JsonResponse
+    public function likeTweet(Request $request, EntityManagerInterface $emi, TweetRepository $tr): JsonResponse
     {
         // Recupera los datos de la request
         // Crear el like
