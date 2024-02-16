@@ -1,5 +1,5 @@
 <!-- Post section -->
-<article class="flex flex-row gap-3 w-full h-[125px]">
+<article class="flex flex-row gap-3 w-full min-h-[125px] mb-8">
   <!-- Post image -->
   <div class="w-[40px] pt-[10px]">
     <img
@@ -45,6 +45,7 @@
 
       <!-- Button -->
       <button
+        (click)="postTweet()"
         class="bg-blue-700 w-[78px] hover:bg-blue-600 text-white px-4 rounded-full"
       >
         Tweet

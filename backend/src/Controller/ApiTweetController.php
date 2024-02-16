@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Like;
 use App\Entity\Tweet;
 use App\Entity\User;
-use App\Repository\TweetRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +18,7 @@ class ApiTweetController extends AbstractController
 {
     // Mostrar todos los tweets del usuario a los que sigue el usuario en sesion
     #[Route('/following/tweets', name: 'app_api_following_tweet', methods: ['GET'])]
-    public function getFollowingTweets(UserRepository $userRepository, Security $security): JsonResponse
+    public function getFollowingTweets(Security $security): JsonResponse
     {
         // Obtener el usuario autenticado
         $user = $security->getUser();
@@ -101,7 +99,7 @@ class ApiTweetController extends AbstractController
         // Recupera los datos de la request
         // Crear el tweet y setear las propiedades necesarias
         $data = json_decode($request->getContent(), true);
-        $tweetContent = $data['tweet'];
+        $tweetContent = $data['content'];
 
         $currentDateTime = new \DateTime('now');
 

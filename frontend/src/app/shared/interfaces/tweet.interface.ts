@@ -9,3 +9,7 @@ export interface Tweet {
   publish_date: string;
   author: string;
 }
+
+export interface TweetContent {
+  content: string;
+}

@@ -18,31 +18,5 @@ export class HomeComponent {
     private authService: AuthService
   ) {}
 
-  ngOnInit(): void {
-    this.getFollowingTweets();
-  }
-
-  getTweets() {
-    this.tweetService
-      .getTweets('following/tweets')
-      .subscribe((res: TweetResponse) => {
-        this.tweets = res.data;
-      });
-  }
-
-  getFollowingTweets() {
-    this.tweetService
-      .getTweets('api/following/tweets')
-      .subscribe((res: TweetResponse) => {
-        this.tweets = res.data;
-      });
-  }
-
-  getSessionIdFromCookie(): string | null {
-    const sessionIdCookie = document.cookie
-      .split('; ')
-      .find((row) => row.startsWith('PHPSESSID='));
-
-    return sessionIdCookie ? sessionIdCookie.split('=')[1] : null;
-  }
+  ngOnInit(): void {}
 }

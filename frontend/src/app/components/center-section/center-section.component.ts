@@ -22,14 +22,6 @@ export class CenterSectionComponent {
     this.getFollowingTweets();
   }
 
-  getTweets() {
-    this.tweetService
-      .getTweets('api/tweets')
-      .subscribe((res: TweetResponse) => {
-        this.tweets = res.data;
-      });
-  }
-
   getFollowingTweets() {
     this.tweetService
       .getTweets('api/following/tweets')
