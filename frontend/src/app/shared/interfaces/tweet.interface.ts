@@ -34,3 +34,8 @@ export interface TweetContent {
 export interface TweetId {
   tweetId: number;
 }
+
+export interface Comment {
+  tweetId: number;
+  content: string;
+}

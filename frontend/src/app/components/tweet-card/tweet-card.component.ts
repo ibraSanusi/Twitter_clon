@@ -9,9 +9,28 @@ import { Tweet, TweetId } from '../../shared/interfaces/tweet.interface';
 })
 export class TweetCardComponent {
   @Input() tweets: Tweet[] = [];
+  toast = false;
 
   constructor(private tweetService: TweetService) {}
 
+  // Maneja si el componente hijo (comment section) ha posteado un comentario
+  // y activa el toast
+  handleActiveToast(newValue: boolean) {
+    if (newValue === true) {
+      // Selecciona el elemento de la modal por su ID
+      const toastElement = document.getElementById('toast');
+      // Elimina la clase 'hidden' para hacer visible la modal
+      toastElement!.classList.remove('hidden');
+      toastElement!.classList.add('flex');
+
+      setTimeout(() => {
+        toastElement!.classList.remove('flex');
+        toastElement!.classList.add('hidden');
+      }, 3000);
+    }
+  }
+
+  // Like or Dislike
   like(id: number) {
     const tweetId: TweetId = {
       tweetId: id,
@@ -40,6 +59,7 @@ export class TweetCardComponent {
     console.log('Estructura del tweetId: ' + tweet);
   }
 
+  // Retweetear o Desretweetear
   retweet(id: number) {
     const tweetId: TweetId = {
       tweetId: id,
@@ -67,5 +87,23 @@ export class TweetCardComponent {
     }
 
     console.log('Estructura del tweetId: ' + tweet);
+  }
+
+  // Abrir la modal
+  openModal() {
+    // Selecciona el elemento de la modal por su ID
+    const modal = document.getElementById('comment-modal');
+    // Elimina la clase 'hidden' para hacer visible la modal
+    modal!.classList.remove('hidden');
+    modal!.classList.add('flex');
+  }
+
+  // Cerrar la modal
+  closeModal() {
+    // Selecciona el elemento de la modal por su ID
+    const modal = document.getElementById('comment-modal');
+    // Elimina la clase 'hidden' para hacer visible la modal
+    modal!.classList.add('hidden');
+    modal!.classList.remove('flex');
   }
 }

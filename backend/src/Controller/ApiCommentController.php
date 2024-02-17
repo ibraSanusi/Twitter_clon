@@ -28,7 +28,7 @@ class ApiCommentController extends AbstractController
         $currentDateTime = new \DateTime('now');
 
         $tweetId = $data['tweetId'];
-        $content = $data['comment'];
+        $content = $data['content'];
 
         $comment = new Comment();
 
