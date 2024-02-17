@@ -30,6 +30,7 @@ import { RetweetIconComponent } from './components/svg/retweet-icon/retweet-icon
 import { SecretoSVGComponent } from './components/svg/secreto-svg/secreto-svg.component';
 import { PostSectionComponent } from './components/post-section/post-section.component';
 import { CommentSectionComponent } from './components/comment-section/comment-section.component';
+import { CommentCardComponent } from './components/comment-card/comment-card.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { CommentSectionComponent } from './components/comment-section/comment-se
     TweetCardComponent,
     PostSectionComponent,
     CommentSectionComponent,
+    CommentCardComponent,
   ],
   imports: [
     BrowserModule,

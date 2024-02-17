@@ -1,17 +1,25 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TweetService } from '../../shared/services/tweet.service';
 import { Tweet, TweetId } from '../../shared/interfaces/tweet.interface';
+import { TweetGlobalService } from '../../shared/global/tweetGlobal.service';
 
 @Component({
   selector: 'app-tweet-card',
   templateUrl: './tweet-card.component.html',
   styleUrls: ['./tweet-card.component.css'],
 })
-export class TweetCardComponent {
-  @Input() tweets: Tweet[] = [];
+export class TweetCardComponent implements OnInit {
   toast = false;
+  tweets: Tweet[] = [];
 
-  constructor(private tweetService: TweetService) {}
+  constructor(
+    private tweetService: TweetService,
+    private _tweets: TweetGlobalService
+  ) {}
+
+  ngOnInit(): void {
+    this.tweets = this._tweets.getTweets();
+  }
 
   // Maneja si el componente hijo (comment section) ha posteado un comentario
   // y activa el toast

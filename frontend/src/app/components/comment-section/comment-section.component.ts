@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import {
   Comment,
-  Tweet,
+  CommentContent,
   TweetId,
 } from '../../shared/interfaces/tweet.interface';
 import { TweetService } from '../../shared/services/tweet.service';
@@ -40,7 +40,7 @@ export class CommentSectionComponent {
     const textarea = this.postTextarea.nativeElement;
     const content = textarea.value.trim();
 
-    const comment: Comment = {
+    const comment: CommentContent = {
       tweetId: tweetId,
       content: content,
     };
