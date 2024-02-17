@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Like;
+use App\Entity\User;
+use App\Repository\LikeRepository;
 use App\Repository\TweetRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,8 +18,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApiLikeController extends AbstractController
 {
     // Dar like a un tweet
-    #[Route('/like/tweet', name: 'app_like_tweet', methods: ['POST'])]
-    public function likeTweet(Request $request, EntityManagerInterface $emi, TweetRepository $tr): JsonResponse
+    #[Route('/like', name: 'app_like', methods: ['POST'])]
+    public function like(Request $request, EntityManagerInterface $emi, TweetRepository $tr): JsonResponse
     {
         // Recupera los datos de la request
         // Crear el like
@@ -39,5 +41,35 @@ class ApiLikeController extends AbstractController
         $emi->flush();
 
         return new JsonResponse('Like a ' . $tweet->getContent() . ' exitosamente', Response::HTTP_CREATED);
+    }
+
+    // Dar like a un tweet
+    #[Route('/delete/like', name: 'app_delete_like', methods: ['POST'])]
+    public function deleteLike(EntityManagerInterface $emi, Security $security, Request $request, LikeRepository $lr): JsonResponse
+    {
+        $user = $security->getUser();
+
+        // Verificar si el usuario está autenticado
+        if (!$user instanceof User) {
+            return new JsonResponse(['error' => 'Usuario no autenticado'], Response::HTTP_UNAUTHORIZED);
+        }
+
+        // Recuperar los datos de la solicitud
+        $data = json_decode($request->getContent(), true);
+        $tweetId = $data['tweetId'];
+
+        // Buscar el like
+        $like = $lr->getLikeId($user->getId(), $tweetId);
+
+        // Verificar si el like existe
+        if (!$like) {
+            return new JsonResponse(['error' => 'El like no existe'], Response::HTTP_NOT_FOUND);
+        }
+
+        // Eliminar el like
+        $emi->remove($like);
+        $emi->flush();
+
+        return new JsonResponse('Like eliminado correctamente.', Response::HTTP_OK);
     }
 }

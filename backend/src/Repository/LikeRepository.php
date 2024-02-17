@@ -37,6 +37,19 @@ class LikeRepository extends ServiceEntityRepository
         return !empty($result);
     }
 
+    public function getLikeId(int $userId, int $tweetId)
+    {
+        $qb = $this->createQueryBuilder('l')
+            ->where('l.user = :userId AND l.tweet = :tweetId')
+            ->setParameter('userId', $userId)
+            ->setParameter('tweetId', $tweetId);
+
+        $query = $qb->getQuery();
+
+        // Obtener un solo resultado o nulo
+        return $query->getOneOrNullResult();
+    }
+
 
     //    /**
     //     * @return Like[] Returns an array of Like objects

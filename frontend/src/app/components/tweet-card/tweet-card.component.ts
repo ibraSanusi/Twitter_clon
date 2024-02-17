@@ -13,20 +13,34 @@ export class TweetCardComponent {
   constructor(private tweetService: TweetService) {}
 
   likeTweet(id: number) {
-    const tweet: Like = {
+    const likedTweet: Like = {
       tweetId: id,
     };
-    console.log('Estructura del tweetId: ' + tweet);
-    this.tweetService.post(tweet, 'api/like/tweet').subscribe((res: any) => {
-      console.log(res);
-      // Si se dio like correctamente al tweet cambiarmos la propiedad liked del tweet a true
-      // Primero hay que buscarlo por id
-      if (!res) return;
 
-      const likedTweet = this.tweets.find((tweet) => tweet.id === id);
-      if (likedTweet) {
-        likedTweet.liked = true;
+    const tweet = this.tweets.find((tweet) => tweet.id === id);
+    if (tweet) {
+      tweet.liked = !tweet.liked;
+
+      // Si antes no tenia un like y ahora lo tiene lo anadimos a la bbdd
+      // Sino lo eliminamos
+      if (tweet.liked) {
+        const deslike: Like = {
+          tweetId: id,
+        };
+
+        // Borrar el like de la base de datos
+        this.tweetService.delete(deslike, 'api/like').subscribe((res) => {
+          console.log(res);
+        });
+      } else {
+        this.tweetService
+          .post(likedTweet, 'api/delete/like')
+          .subscribe((res: any) => {
+            console.log(res);
+          });
       }
-    });
+    }
+
+    console.log('Estructura del tweetId: ' + tweet);
   }
 }

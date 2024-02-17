@@ -16,8 +16,12 @@
           src="https://pbs.twimg.com/profile_images/1714979648424083456/kA54qel7_400x400.jpg"
           alt="{{ tweet.author }} avatar"
         />
-        <h5>{{ tweet.author }}</h5>
-
+        <div>
+          <h5>{{ tweet.author }}</h5>
+          <span class="text-[0.8rem]">
+            {{ tweet.publishDate | date : "dd/MM" }}
+          </span>
+        </div>
         <!-- Por ahora no se mostraran tweets de gente a la que no sigue por lo que no es necesario -->
         <!-- comprobar el tweet es de uno de los que sigue -->
         <!-- <button

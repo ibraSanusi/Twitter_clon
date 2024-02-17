@@ -30,4 +30,17 @@ export class TweetService {
       responseType: 'json' as const,
     });
   }
+
+  delete(body: any, path: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json' as const,
+      Accept: 'application/json' as const,
+    });
+
+    return this.http.post<any>(`${this.apiUrl}${path}`, body, {
+      headers,
+      withCredentials: true,
+      responseType: 'json' as const,
+    });
+  }
 }
