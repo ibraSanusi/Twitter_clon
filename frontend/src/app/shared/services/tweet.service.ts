@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IUser } from '../interfaces/user.interface';
 import { Observable } from 'rxjs';
-import { Like, TweetResponse } from '../interfaces/tweet.interface';
+import { TweetResponse } from '../interfaces/tweet.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -19,19 +19,6 @@ export class TweetService {
   }
 
   post(body: any, path: string): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json' as const,
-      Accept: 'application/json' as const,
-    });
-
-    return this.http.post<any>(`${this.apiUrl}${path}`, body, {
-      headers,
-      withCredentials: true,
-      responseType: 'json' as const,
-    });
-  }
-
-  delete(body: any, path: string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json' as const,
       Accept: 'application/json' as const,

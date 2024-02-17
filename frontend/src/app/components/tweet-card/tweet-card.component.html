@@ -45,13 +45,13 @@
       </button>
 
       <!-- Like button -->
-      <button (click)="likeTweet(tweet.id)">
+      <button (click)="like(tweet.id)">
         <app-like-icon [liked]="tweet.liked" />
       </button>
 
       <!-- Retweet -->
-      <button href="">
-        <app-retweet-icon />
+      <button (click)="retweet(tweet.id)">
+        <app-retweet-icon [retweeted]="tweet.retweeted" />
       </button>
     </div>
   </div>

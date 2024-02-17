@@ -10,6 +10,7 @@ export interface Tweet {
   publishDate: string;
   retweets: Retweet[];
   liked: boolean;
+  retweeted: boolean;
   likesCount: number;
 }
 
@@ -30,6 +31,6 @@ export interface TweetContent {
   content: string;
 }
 
-export interface Like {
+export interface TweetId {
   tweetId: number;
 }

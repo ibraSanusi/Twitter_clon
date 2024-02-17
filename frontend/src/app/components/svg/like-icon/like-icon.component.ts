@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Like } from '../../../shared/interfaces/tweet.interface';
 
 @Component({
   selector: 'app-like-icon',
