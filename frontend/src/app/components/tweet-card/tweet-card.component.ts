@@ -1,6 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TweetService } from '../../shared/services/tweet.service';
-import { Tweet, TweetId } from '../../shared/interfaces/tweet.interface';
+import {
+  Tweet,
+  TweetId,
+  TweetResponse,
+} from '../../shared/interfaces/tweet.interface';
 import { TweetGlobalService } from '../../shared/global/tweetGlobal.service';
 
 @Component({
@@ -18,7 +22,9 @@ export class TweetCardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.tweets = this._tweets.getTweets();
+    this._tweets.getTweets().subscribe((tweets: TweetResponse) => {
+      this.tweets = tweets.data;
+    });
   }
 
   // Maneja si el componente hijo (comment section) ha posteado un comentario
