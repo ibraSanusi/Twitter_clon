@@ -47,6 +47,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comment::class)]
     private Collection $comments;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: LikeComment::class)]
+    private Collection $likeComments;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: RetweetComment::class)]
+    private Collection $retweetComments;
+
     public function __construct()
     {
         $this->tweets = new ArrayCollection();
@@ -54,6 +60,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->followers = new ArrayCollection();
         $this->following = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->likeComments = new ArrayCollection();
+        $this->retweetComments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -248,6 +256,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($comment->getAuthor() === $this) {
                 $comment->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LikeComment>
+     */
+    public function getLikeComments(): Collection
+    {
+        return $this->likeComments;
+    }
+
+    public function addLikeComment(LikeComment $likeComment): static
+    {
+        if (!$this->likeComments->contains($likeComment)) {
+            $this->likeComments->add($likeComment);
+            $likeComment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikeComment(LikeComment $likeComment): static
+    {
+        if ($this->likeComments->removeElement($likeComment)) {
+            // set the owning side to null (unless already changed)
+            if ($likeComment->getUser() === $this) {
+                $likeComment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RetweetComment>
+     */
+    public function getRetweetComments(): Collection
+    {
+        return $this->retweetComments;
+    }
+
+    public function addRetweetComment(RetweetComment $retweetComment): static
+    {
+        if (!$this->retweetComments->contains($retweetComment)) {
+            $this->retweetComments->add($retweetComment);
+            $retweetComment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRetweetComment(RetweetComment $retweetComment): static
+    {
+        if ($this->retweetComments->removeElement($retweetComment)) {
+            // set the owning side to null (unless already changed)
+            if ($retweetComment->getUser() === $this) {
+                $retweetComment->setUser(null);
             }
         }
 

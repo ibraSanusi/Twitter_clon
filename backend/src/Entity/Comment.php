@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,6 +31,18 @@ class Comment
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
+
+    #[ORM\OneToMany(mappedBy: 'comment', targetEntity: LikeComment::class)]
+    private Collection $likeComments;
+
+    #[ORM\OneToMany(mappedBy: 'comment', targetEntity: RetweetComment::class)]
+    private Collection $retweetComments;
+
+    public function __construct()
+    {
+        $this->likeComments = new ArrayCollection();
+        $this->retweetComments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -91,6 +105,66 @@ class Comment
     public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LikeComment>
+     */
+    public function getLikeComments(): Collection
+    {
+        return $this->likeComments;
+    }
+
+    public function addLikeComment(LikeComment $likeComment): static
+    {
+        if (!$this->likeComments->contains($likeComment)) {
+            $this->likeComments->add($likeComment);
+            $likeComment->setComment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikeComment(LikeComment $likeComment): static
+    {
+        if ($this->likeComments->removeElement($likeComment)) {
+            // set the owning side to null (unless already changed)
+            if ($likeComment->getComment() === $this) {
+                $likeComment->setComment(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RetweetComment>
+     */
+    public function getRetweetComments(): Collection
+    {
+        return $this->retweetComments;
+    }
+
+    public function addRetweetComment(RetweetComment $retweetComment): static
+    {
+        if (!$this->retweetComments->contains($retweetComment)) {
+            $this->retweetComments->add($retweetComment);
+            $retweetComment->setComment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRetweetComment(RetweetComment $retweetComment): static
+    {
+        if ($this->retweetComments->removeElement($retweetComment)) {
+            // set the owning side to null (unless already changed)
+            if ($retweetComment->getComment() === $this) {
+                $retweetComment->setComment(null);
+            }
+        }
 
         return $this;
     }
