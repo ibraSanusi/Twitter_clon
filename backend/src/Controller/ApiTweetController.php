@@ -76,7 +76,7 @@ class ApiTweetController extends AbstractController
             $retweets[] = [
                 'id' => $retweet->getId(),
                 'tweet' => $retweet->getTweet()->getId(),
-                'retweetDate' => $retweet->getRetweetDate(),
+                'createdAt' => $retweet->getRetweetDate()->format('Y-m-d H:i:s'),
                 'userId' => $retweet->getUser()->getId(),
             ];
         }
@@ -89,7 +89,7 @@ class ApiTweetController extends AbstractController
                 'author' => $comment->getAuthor()->getUsername(),
                 'content' => $comment->getContent(),
                 'parentComment' => $comment->getParentComment(),
-                'createdAt' => $comment->getCreatedAt(),
+                'createdAt' => $comment->getCreatedAt()->format('Y-m-d H:i:s'),
             ];
         }
 
@@ -103,7 +103,7 @@ class ApiTweetController extends AbstractController
             'id' => $tweet->getId(),
             'content' => $tweet->getContent(),
             'author' => $tweet->getUser()->getUsername(),
-            'publishDate' => $tweet->getPublishDate()->format('Y-m-d H:i:s'),
+            'createdAt' => $tweet->getPublishDate()->format('Y-m-d H:i:s'),
             'retweets' => $retweets,
             'comments' => $comments,
             'liked' => $isLiked,

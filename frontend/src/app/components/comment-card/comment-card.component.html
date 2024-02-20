@@ -1,58 +1,25 @@
-<!-- Tweets Card -->
-<article class="flex flex-col gap-4">
-  <div
-    *ngFor="let tweet of tweets"
-    class="flex flex-col rounded-lg dark:bg-gray-800 dark:border-gray-700"
+<!-- Comment Card -->
+<article class="my-10 flex flex-row gap-4">
+  <!-- User avatar -->
+  <img
+    class="w-7 h-7 rounded"
+    src="https://pbs.twimg.com/profile_images/1714979648424083456/kA54qel7_400x400.jpg"
+    alt="{{ comment.author }} avatar"
+  />
+
+  <main
+    class="flex flex-col gap-1 border-solid border-gray-200 p-2 border-[1px] rounded"
   >
-    <!-- Tweet card header -->
-    <header
-      class="flex flex-row justify-between items-center p-3 hover:bg-gray-700 w-full rounded-t-lg"
-    >
-      <!-- User info -->
-      <div class="flex flex-row gap-2 items-center">
-        <!-- User avatar -->
-        <img
-          class="w-7 h-7 rounded"
-          src="https://pbs.twimg.com/profile_images/1714979648424083456/kA54qel7_400x400.jpg"
-          alt="{{ tweet.author }} avatar"
-        />
-        <div>
-          <h5>{{ tweet.author }}</h5>
-          <span class="text-[0.8rem]">
-            {{ tweet.publishDate | date : "dd/MM" }}
-          </span>
-        </div>
-        <!-- Por ahora no se mostraran tweets de gente a la que no sigue por lo que no es necesario -->
-        <!-- comprobar el tweet es de uno de los que sigue -->
-        <!-- <button
-            class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
-          >
-            Seguir
-          </button> -->
-      </div>
-      <div>icon</div>
-    </header>
+    <!-- User info -->
+    <section class="flex flex-row gap-2 items-center p-0 m-0">
+      <h5 class="items-center">{{ comment.author }}</h5>
+      <span class="text-[0.8rem] items-center">
+        {{ comment.createdAt | date : "dd/MM" }}
+      </span>
+    </section>
 
-    <p class="mb-3 font-normal p-3 text-gray dark:text-white">
-      {{ tweet.content }}
+    <p class="font-normal text-gray dark:text-white m-0 p-0">
+      {{ comment.content }}
     </p>
-
-    <!-- Interaction buttons -->
-    <div class="flex flex-row items-center gap-3 p-3">
-      <!-- Comment -->
-      <button type="button">
-        <app-comment-icon />
-      </button>
-
-      <!-- Like button -->
-      <button (click)="like(tweet.id)">
-        <app-like-icon [liked]="tweet.liked" />
-      </button>
-
-      <!-- Retweet -->
-      <button (click)="retweet(tweet.id)">
-        <app-retweet-icon [retweeted]="tweet.retweeted" />
-      </button>
-    </div>
-  </div>
+  </main>
 </article>

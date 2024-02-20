@@ -7,7 +7,7 @@ export interface Tweet {
   id: number;
   content: string;
   author: string;
-  publishDate: string;
+  createdAt: string;
   retweets: Retweet[];
   comments: Comment[];
   liked: boolean;
@@ -19,14 +19,8 @@ export interface Tweet {
 export interface Retweet {
   id: number;
   tweet: number;
-  retweetDate: CreatedAt;
+  createdAt: string;
   userId: number;
-}
-
-export interface CreatedAt {
-  date: string;
-  timezone_type: number;
-  timezone: string;
 }
 
 export interface TweetContent {
@@ -47,5 +41,5 @@ export interface Comment {
   author: string;
   content: string;
   parentComment: any;
-  createdAt: CreatedAt;
+  createdAt: string;
 }

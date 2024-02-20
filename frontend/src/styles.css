@@ -16,7 +16,7 @@ body {
 ::-webkit-scrollbar-thumb {
     background: #3d3c3c;
     border-radius: 4px;
-    height: 110px;
+    height: 10%;
 }
 
 /* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
