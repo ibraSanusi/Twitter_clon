@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\RetweetCommentRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RetweetCommentRepository::class)]
@@ -18,6 +19,9 @@ class RetweetComment
 
     #[ORM\ManyToOne(inversedBy: 'retweetComments')]
     private ?Comment $comment = null;
+
+    #[ORM\Column]
+    private ?\DateTime $createdAt = null;
 
     public function getId(): ?int
     {
@@ -44,6 +48,18 @@ class RetweetComment
     public function setComment(?Comment $comment): static
     {
         $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
+use App\Entity\LikeComment;
 use App\Entity\Tweet;
 use App\Entity\User;
+use App\Repository\LikeCommentRepository;
 use App\Repository\LikeRepository;
+use App\Repository\RetweetCommentRepository;
 use App\Repository\RetweetRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,6 +22,15 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/api', name: 'api_tweet')]
 class ApiTweetController extends AbstractController
 {
+    private LikeCommentRepository $lcr;
+    private RetweetCommentRepository $rcr;
+
+    public function __construct(LikeCommentRepository $lcr, RetweetCommentRepository $rcr)
+    {
+        $this->lcr = $lcr;
+        $this->rcr = $rcr;
+    }
+
     // Mostrar todos los tweets del usuario a los que sigue el usuario en sesion
     // Se debe devolver un campo likeed que indique si ese tweet ya ha sido likeado o no por el usuario en sesion
     // Este campo tendra el identificador del usuario
@@ -67,6 +80,7 @@ class ApiTweetController extends AbstractController
         return new JsonResponse(['success' => true, 'data' => $json_tweets]);
     }
 
+
     // Transforma la informacion de un tweet en json
     public function transformTweet(Tweet $tweet, int $userId, LikeRepository $lr, RetweetRepository $rr): array
     {
@@ -84,13 +98,9 @@ class ApiTweetController extends AbstractController
         // Sacar los comentarios del tweet
         $comments = [];
         foreach ($tweet->getComments() as $comment) {
-            $comments[] = [
-                'id' => $comment->getId(),
-                'author' => $comment->getAuthor()->getUsername(),
-                'content' => $comment->getContent(),
-                'parentComment' => $comment->getParentComment(),
-                'createdAt' => $comment->getCreatedAt()->format('Y-m-d H:i:s'),
-            ];
+            if (!$comment instanceof Comment) return null;
+
+            $comments[] = $this->transformComment($comment, $userId);
         }
 
         // Hay que comprobar si el usuario en sesion ha dado like al tweet
@@ -99,7 +109,7 @@ class ApiTweetController extends AbstractController
         // Comprobar si el tweet ya fue retweeteado
         $isRetweeted = $rr->isRetweeted($userId, $tweet->getId());
 
-        $json_tweets = [
+        return [
             'id' => $tweet->getId(),
             'content' => $tweet->getContent(),
             'author' => $tweet->getUser()->getUsername(),
@@ -111,9 +121,27 @@ class ApiTweetController extends AbstractController
             'likesCount' => count($tweet->getLikesCount()),
             'commentsCount' => count($comments),
         ];
+    }
 
+    // Transformar comentarios a json
+    public function transformComment(Comment $comment, int $userId): array
+    {
+        // Hay que comprobar si el usuario en sesion ha dado like al tweet
+        $isLiked = $this->lcr->isLiked($userId, $comment->getId());
 
-        return $json_tweets;
+        // Comprobar si el comment ya fue retweeteado
+        $isRetweeted = $this->rcr->isRetweeted($userId, $comment->getId());
+
+        return [
+            'id' => $comment->getId(),
+            'author' => $comment->getAuthor()->getUsername(),
+            'content' => $comment->getContent(),
+            'parentComment' => $comment->getParentComment(),
+            'liked' => $isLiked,
+            'retweeted' => $isRetweeted,
+            'likesCount' => count($comment->getLikeComments()),
+            'createdAt' => $comment->getCreatedAt()->format('Y-m-d H:i:s'),
+        ];
     }
 
     // Almacenar el post (tweet) del usuario en la bbdd

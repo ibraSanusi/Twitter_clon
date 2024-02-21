@@ -21,28 +21,57 @@ class RetweetCommentRepository extends ServiceEntityRepository
         parent::__construct($registry, RetweetComment::class);
     }
 
-//    /**
-//     * @return RetweetComment[] Returns an array of RetweetComment objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function isRetweeted(int $userId, int $commentId): bool
+    {
+        // automatically knows to select RetweetComment
+        // the "rc" is an alias you'll use in the rest of the query
+        $qb = $this->createQueryBuilder('rc')
+            ->where('rc.user = :userId AND rc.comment = :commentId')
+            ->setParameter('userId', $userId)
+            ->setParameter('commentId', $commentId);
 
-//    public function findOneBySomeField($value): ?RetweetComment
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $query = $qb->getQuery();
+
+        $result = $query->getResult();
+
+        return !empty($result);
+    }
+
+    public function getRetweetId(int $userId, int $commentId)
+    {
+        $qb = $this->createQueryBuilder('rc')
+            ->where('rc.user = :userId AND rc.comment = :commentId')
+            ->setParameter('userId', $userId)
+            ->setParameter('commentId', $commentId);
+
+        $query = $qb->getQuery();
+
+        // Obtener un solo resultado o nulo
+        return $query->getOneOrNullResult();
+    }
+
+    //    /**
+    //     * @return RetweetComment[] Returns an array of RetweetComment objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('r')
+    //            ->andWhere('r.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('r.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?RetweetComment
+    //    {
+    //        return $this->createQueryBuilder('r')
+    //            ->andWhere('r.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

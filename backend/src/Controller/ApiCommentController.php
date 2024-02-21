@@ -3,12 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Tweet;
+use App\Repository\CommentRepository;
 use App\Repository\TweetRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,5 +43,40 @@ class ApiCommentController extends AbstractController
         $emi->flush();
 
         return new JsonResponse('El usuario ' . $user->getUsername() . ' ha comentado el tweet: ' . $tweet->getContent() . ' de ' . $tweet->getUser()->getUsername());
+    }
+
+    // Hacer un comentario a un comentario
+    #[Route('/comment/comment', name: 'app_comment_comment')]
+    public function commentAComment(UserRepository $ur, Request $request, EntityManagerInterface $emi, CommentRepository $cr): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $user = $ur->find($this->getUser());
+
+        $currentDateTime = new \DateTime('now');
+
+        $commentId = $data['commentId'];
+        $content = $data['content'];
+
+        $parentComment = $cr->find($commentId);
+
+        if (!$parentComment instanceof Comment) return new JsonResponse('No existe ese comentario.', Response::HTTP_INTERNAL_SERVER_ERROR);
+
+        $comment = new Comment();
+
+        $tweet = $parentComment->getTweet();
+
+        if (!$tweet instanceof Tweet) return new JsonResponse('Ese tweet no existe.', Response::HTTP_INTERNAL_SERVER_ERROR);
+
+        $comment->setContent($content);
+        $comment->setTweet($tweet);
+        $comment->setAuthor($user);
+        $comment->setParentComment($parentComment->getId());
+        $comment->setCreatedAt($currentDateTime);
+
+        $emi->persist($comment);
+        $emi->flush();
+
+        return new JsonResponse('El usuario ' . $user->getUsername() . ' ha comentado el comentario: ' . $comment->getContent() . ' de ' . $tweet->getUser()->getUsername());
     }
 }
