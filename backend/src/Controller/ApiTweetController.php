@@ -56,7 +56,7 @@ class ApiTweetController extends AbstractController
         }
 
         // Devolver una respuesta con los tweets del usuario
-        return new JsonResponse(['success' => true, 'data' => $followingTweets]);
+        return new JsonResponse(['userSession' => $user->getUsername(), 'data' => $followingTweets]);
     }
 
     // Devuelve todos los tweets del usuario en sesion
@@ -139,14 +139,16 @@ class ApiTweetController extends AbstractController
             'parentComment' => $comment->getParentComment(),
             'liked' => $isLiked,
             'retweeted' => $isRetweeted,
-            'likesCount' => count($comment->getLikeComments()),
+            'likesCount' => count($comment->getLikeComments()) ? count($comment->getLikeComments()) : 0,
+            'commentsCount' => 0, // TODO: sacar los comentarios que tienen como parentComment este comentario (CommentRepository)
+            'retweetsCount' => count($comment->getRetweetComments()) ? count($comment->getRetweetComments()) : 0,
             'createdAt' => $comment->getCreatedAt()->format('Y-m-d H:i:s'),
         ];
     }
 
     // Almacenar el post (tweet) del usuario en la bbdd
     #[Route('/post/tweet', name: 'app_post_tweet', methods: ['POST'])]
-    public function postTweet(UserRepository $ur, Request $request, EntityManagerInterface $emi): JsonResponse
+    public function postTweet(UserRepository $ur, Request $request, EntityManagerInterface $emi, LikeRepository $lr, RetweetRepository $rr): JsonResponse
     {
         $user = $ur->find($this->getUser());
 
@@ -165,6 +167,8 @@ class ApiTweetController extends AbstractController
         $emi->persist($tweet);
         $emi->flush();
 
-        return new JsonResponse('Tweet subido correctamente', Response::HTTP_CREATED);
+        $response = $this->transformTweet($tweet, $tweet->getUser()->getId(), $lr, $rr);
+
+        return new JsonResponse($response, Response::HTTP_CREATED);
     }
 }

@@ -4,6 +4,8 @@
 
 body {
     background: rgb(17 24 39);
+    padding: 0;
+    margin: 0;
 }
 
 /* Tamaño del scroll en vertical */
@@ -16,7 +18,7 @@ body {
 ::-webkit-scrollbar-thumb {
     background: #3d3c3c;
     border-radius: 4px;
-    height: 10%;
+    height: 110px;
 }
 
 /* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
@@ -35,10 +37,5 @@ body {
     background: rgb(17 24 39);
     /* background: #e1e1e1; */
     border-radius: 4px;
-}
-
-body {
-    padding: 0;
-    margin: 0;
 }
 

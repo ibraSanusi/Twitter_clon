@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/api', name: 'api_comment')]
 class ApiLikeCommentController extends AbstractController
 {
-    // Dar like a un tweet
+    // Dar like a un comentario
     #[Route('/like/comment', name: 'app_like_comment', methods: ['POST'])]
     public function like(Request $request, EntityManagerInterface $emi, CommentRepository $cr): JsonResponse
     {
@@ -63,7 +63,7 @@ class ApiLikeCommentController extends AbstractController
         // Buscar el like del comentario
         $likeComment = $lcr->getLikeId($user->getId(), $commentId);
 
-        // Verificar si el like existe
+        // Verificar si el like del comentario existe
         if (!$likeComment) {
             return new JsonResponse(['error' => 'El like del comentario no existe'], Response::HTTP_NOT_FOUND);
         }

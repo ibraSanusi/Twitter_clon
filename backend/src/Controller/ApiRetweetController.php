@@ -19,7 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApiRetweetController extends AbstractController
 {
     // Dar retweet a los tweets de los usuarios a los que sigue el usuario en sesion
-    // Controller con reentrada
     #[Route('/retweet', name: 'app_retweet')]
     public function retweet(UserRepository $ur, Request $request, EntityManagerInterface $emi, TweetRepository $tr): Response
     {

@@ -6,8 +6,6 @@ use App\Entity\RetweetComment;
 use App\Entity\User;
 use App\Repository\CommentRepository;
 use App\Repository\RetweetCommentRepository;
-use App\Repository\RetweetRepository;
-use App\Repository\TweetRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,7 +46,7 @@ class ApiRetweetCommentController extends AbstractController
 
     // Quitar retweet al comentario
     #[Route('/delete/retweet/comment', name: 'app_delete_retweet_comment', methods: ['POST'])]
-    public function deleteRetweet(EntityManagerInterface $emi, Security $security, Request $request, RetweetCommentRepository $rcr): JsonResponse
+    public function deleteCommentRetweet(EntityManagerInterface $emi, Security $security, Request $request, RetweetCommentRepository $rcr): JsonResponse
     {
         $user = $security->getUser();
 

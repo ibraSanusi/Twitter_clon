@@ -40,6 +40,9 @@ export interface Comment {
   id: number;
   author: string;
   content: string;
-  parentComment: any;
+  parentComment?: number;
+  liked: boolean;
+  retweeted: boolean;
+  likesCount: number;
   createdAt: string;
 }

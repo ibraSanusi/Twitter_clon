@@ -18,6 +18,7 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 class ApiSecurityController extends AbstractController
 {
+    // Login si existe el usuario en la bbdd
     #[Route('/api/login', name: 'app_api_login', methods: ['POST'])]
     public function login(#[CurrentUser] User $user = null): JsonResponse
     {
@@ -29,6 +30,7 @@ class ApiSecurityController extends AbstractController
         ]);
     }
 
+    // Logout
     #[Route('/api/logout', name: 'app_api_logout')]
     public function logout(Security $security, #[CurrentUser] User $user = null): JsonResponse
     {

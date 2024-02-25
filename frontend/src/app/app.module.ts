@@ -31,6 +31,7 @@ import { SecretoSVGComponent } from './components/svg/secreto-svg/secreto-svg.co
 import { PostSectionComponent } from './components/post-section/post-section.component';
 import { CommentSectionComponent } from './components/comment-section/comment-section.component';
 import { CommentCardComponent } from './components/comment-card/comment-card.component';
+import { CommentComponent } from './pages/comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { CommentCardComponent } from './components/comment-card/comment-card.com
     PostSectionComponent,
     CommentSectionComponent,
     CommentCardComponent,
+    CommentComponent,
   ],
   imports: [
     BrowserModule,

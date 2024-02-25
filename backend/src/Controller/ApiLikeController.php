@@ -43,7 +43,7 @@ class ApiLikeController extends AbstractController
         return new JsonResponse('Like a ' . $tweet->getContent() . ' exitosamente', Response::HTTP_CREATED);
     }
 
-    // Dar like a un tweet
+    // Quitar el like a un tweet
     #[Route('/delete/like', name: 'app_delete_like', methods: ['POST'])]
     public function deleteLike(EntityManagerInterface $emi, Security $security, Request $request, LikeRepository $lr): JsonResponse
     {
