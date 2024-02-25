@@ -1,0 +1,6 @@
+/* CSS personalizado */
+.border-gradient {
+    border-width: 2px; /* Define el ancho del borde según sea necesario */
+    border-style: solid;
+    border-image: linear-gradient(to bottom right, #642bff, #ff22e6); /* Establece el gradiente para el borde */
+}

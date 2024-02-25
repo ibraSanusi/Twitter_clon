@@ -2,10 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+    .border-gradient {
+        border-image: linear-gradient(to bottom right, #642bff, #ff22e6);
+    }
+}
+
+html {
+    scrollbar-gutter: stable;
+    /* background: rgb(17 24 39); */
+}
+
 body {
     background: rgb(17 24 39);
     padding: 0;
     margin: 0;
+    scrollbar-gutter: stable;
 }
 
 /* Tamaño del scroll en vertical */
@@ -16,9 +28,18 @@ body {
 
 /* Ponemos un color de fondo y redondeamos las esquinas del thumb */
 ::-webkit-scrollbar-thumb {
-    background: #3d3c3c;
+    /* background: #3d3c3c; */
+    background: linear-gradient(#642bff, #ff22e6);
     border-radius: 4px;
-    height: 110px;
+    max-height: 50px !important; 
+    width: 8px;
+}
+
+/* Ponemos un color de fondo y redondeamos las esquinas del track */
+::-webkit-scrollbar-track {
+    background: rgb(17 24 39);
+    /* background: #e1e1e1; */
+    border-radius: 4px;
 }
 
 /* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
@@ -32,10 +53,4 @@ body {
     background-color: #333232;
 }
 
-/* Ponemos un color de fondo y redondeamos las esquinas del track */
-::-webkit-scrollbar-track {
-    background: rgb(17 24 39);
-    /* background: #e1e1e1; */
-    border-radius: 4px;
-}
 

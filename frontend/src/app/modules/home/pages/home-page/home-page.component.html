@@ -1,0 +1,276 @@
+<main class="grid grid-cols-3 min-h-screen text-white bg-[#1e1e24]">
+  <!-- Seccion de la izquierda -->
+  <!-- Left section -->
+  <section class="left-section flex justify-end px-6">
+    <article class="fixed left-section-content flex flex-col justify-between">
+      <!-- Left section title -->
+      <div class="h-full">
+        <header class="py-2 px-4 flex justify-center items-center mb-4">
+          <strong class="text-3xl">Radio patio</strong>
+        </header>
+
+        <!-- Left section menu -->
+        <ul class="menu-options flex flex-col gap-2">
+          <li class="flex flex-row items-center gap-2">
+            <i>
+              <search-icon />
+            </i>
+            Explorar
+          </li>
+          <li class="flex flex-row items-center gap-2">
+            <i>
+              <profile-icon />
+            </i>
+            Perfil
+          </li>
+          <li class="flex flex-row items-center gap-2">
+            <i>
+              <setting-icon />
+            </i>
+            Settings
+          </li>
+          <li class="flex flex-row items-center gap-2"></li>
+        </ul>
+      </div>
+      <!-- Logout en la seccion de la izquierda -->
+      <button (click)="logout()" class="flex flex-row items-center gap-2 py-8">
+        <i>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
+            />
+          </svg>
+        </i>
+        Logout
+      </button>
+    </article>
+  </section>
+
+  <!-- Seccion del centro. Aqui estaran las seccion del post y los tweets -->
+  <section class="rounded h-auto">
+    <!-- Header de la seccion central -->
+    <header class="flex flex-row justify-between py-2">
+      <strong class="text-3xl">Home</strong>
+      <star-icon />
+    </header>
+
+    <!-- Post section -->
+    <article
+      class="rounded-2xl flex flex-row gap-3 w-full min-h-[125px] mb-8 p-4 bg-[#444140]"
+    >
+      <!-- Post image -->
+      <div class="w-[40px] pt-[10px]">
+        <img
+          class="rounded-full"
+          src="https://pbs.twimg.com/profile_images/1714979648424083456/kA54qel7_400x400.jpg"
+          alt="Imagen del usuario"
+        />
+      </div>
+
+      <!-- Textarea de los tweets -->
+      <article class="flex flex-col gap-4 w-full">
+        <!-- TODO: Eliminar los bordes del textarea en el focus -->
+        <textarea
+          #postTextarea
+          class="focus:outline-none w-full border-none h-[52px] pt-[12px] pb-[12px] bg-transparent resize-none overflow-y-hidden"
+          name="post"
+          id="post"
+          cols="30"
+          rows="1"
+          (input)="onInput()"
+          placeholder="What is happening?!"
+        ></textarea>
+
+        <!-- Post icons and post button -->
+        <article class="flex flex-row justify-between">
+          <!-- Icons -->
+          <ul class="flex flex-row gap-2">
+            <li>
+              <image-icon />
+            </li>
+            <li>
+              <gif-icon />
+            </li>
+            <li>
+              <smile-icon />
+            </li>
+            <li>
+              <stats-icon />
+            </li>
+          </ul>
+
+          <!-- Button -->
+          <button
+            (click)="postTweet()"
+            class="bg-blue-700 w-[78px] hover:bg-blue-600 text-white px-4 rounded-full"
+          >
+            Tweet
+          </button>
+        </article>
+      </article>
+    </article>
+
+    <!-- Aqui van los tweets de los seguidos -->
+    <article
+      *ngFor="let tweet of tweets"
+      class="flex flex-col gap-3 mb-6 rounded-2xl bg-[#444140] p-4"
+    >
+      <header class="flex flex-row gap-2">
+        <img
+          src="https://www.github.com/midudev.png"
+          alt=""
+          class="w-[40px] h-[40px] rounded"
+        />
+        <div class="flex flex-col">
+          <span class="text-sm">&commat;{{ tweet.author }}</span>
+          <span class="text-sm">{{ tweet.createdAt | date }}</span>
+        </div>
+      </header>
+
+      <img
+        class="rounded-2xl"
+        src="https://64.media.tumblr.com/60b215e4908be05b31a6afbcaa8d3d10/271fda2b7ddef658-0f/s1280x1920/d9b3481f3bab57fd49561b908e6db6e03073eaa3.jpg"
+        alt=""
+      />
+
+      <p>{{ tweet.content }}</p>
+
+      <!-- Botones interactivos del tweet (like, comment, retweet) -->
+      <section class="flex flex-row gap-3 justify-end">
+        <button
+          (click)="toggleCommentVisibility(tweet.id)"
+          class="flex flex-row gap-1 items-center hover:text-blue-600"
+        >
+          <comment-icon />
+          <span class="text-xs">{{ tweet.commentsCount }}</span>
+        </button>
+        <button class="flex flex-row gap-1 items-center hover:text-red-800">
+          <like-icon [liked]="tweet.liked" />
+          @if(tweet.retweeted) {
+          <span class="text-xs text-red-600">{{ tweet.likesCount }}</span>
+          }@else {
+          <span class="text-xs">{{ tweet.likesCount }}</span>
+          }
+        </button>
+        <button class="flex flex-row gap-1 items-center hover:text-green-600">
+          <retweet-icon [retweeted]="tweet.retweeted" />
+          @if(tweet.retweeted) {
+          <span class="text-xs text-green-400">{{
+            tweet.retweets.length
+          }}</span>
+          }@else {
+          <span class="text-xs">{{ tweet.retweets.length }}</span>
+          }
+        </button>
+      </section>
+
+      <!-- Parte para comentar el tweet (estara oculto hasta que se pulse el boton comment) -->
+      @if(tweetCommentVisibility[tweet.id]) {
+      <section class="flex flex-col gap-3">
+        <div class="flex flex-row gap-2">
+          <img
+            src="https://www.github.com/midudev.png"
+            alt=""
+            class="w-[40px] h-[40px] rounded"
+          />
+          <textarea
+            #commentTextarea
+            id="comment-postarea"
+            class="mb-4 resize-none w-full bg-[#1e1e24] rounded-xl border-none outline-none overflow-hidden whitespace-pre-wrap break-word text-white"
+            rows="1"
+            [placeholder]="'Responder desde @' + userSession"
+          ></textarea>
+          <button
+            (click)="comment(tweet.id)"
+            class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600"
+          >
+            <svg
+              class="w-5 h-5 rotate-90"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 18 20"
+            >
+              <path
+                d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z"
+              />
+            </svg>
+            <span class="sr-only">Send message</span>
+          </button>
+        </div>
+
+        <!-- Comentarios -->
+        <article
+          class="flex flex-row gap-3"
+          *ngFor="let comment of tweet.comments"
+        >
+          <img
+            src="https://www.github.com/midudev.png"
+            alt=""
+            class="size-[40px] rounded"
+          />
+          <article class="flex flex-col border rounded p-2 gap-2">
+            <p class="text-sm w-fit text-pretty">{{ comment.content }}</p>
+            <!-- Botones interactivos del tweet (like, comment, retweet) -->
+            <div class="flex flex-row gap-3">
+              <button
+                class="flex flex-row gap-1 items-center hover:text-blue-600"
+              >
+                <comment-icon />
+                <span class="text-xs">{{ comment.commentsCount }}</span>
+              </button>
+              <button
+                (click)="likeComment(tweet.id, comment.id)"
+                class="flex flex-row gap-1 items-center hover:text-red-800"
+              >
+                <like-icon [liked]="comment.liked" />
+                <span class="text-xs">{{ comment.likesCount }}</span>
+              </button>
+              <button
+                (click)="retweetComment(tweet.id, comment.id)"
+                class="flex flex-row gap-1 items-center hover:text-green-600"
+              >
+                <retweet-icon [retweeted]="comment.retweeted" />
+                <span class="text-xs">{{ comment.retweetsCount }}</span>
+              </button>
+            </div>
+          </article>
+        </article>
+      </section>
+      }
+    </article>
+  </section>
+
+  <!-- Right section -->
+  <section class="flex flex-col gap-4 right-section py-2 px-4">
+    <div class="w-[305px] h-full flex flex-col gap-5">
+      <nav
+        class="w-full h-[35px] flex flex-row items-center bg-[#444140] text-white rounded-md"
+      >
+        <i class="p-3">
+          <search-icon />
+        </i>
+        <input
+          class="border-none focus:border-none bg-transparent w-full py-2 pr-2 focus:outline-none text-white"
+          type="search"
+          placeholder="Busca lo que quieras en Radio patio"
+        />
+      </nav>
+
+      <h2 class="text-xl w-full">Echa un vistazo a estos perfiles</h2>
+      <!-- Recomendated user card -->
+      <article class="w-full">
+        <user-recomendated-card />
+      </article>
+    </div>
+  </section>
+</main>

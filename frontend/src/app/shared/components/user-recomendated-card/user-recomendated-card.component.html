@@ -1,0 +1,44 @@
+<div
+  class="w-full max-w-md p-4 bg-[#444140] rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700"
+>
+  <div class="flex items-center justify-between mb-4">
+    <h5 class="text-xl font-bold leading-none text-white">Latest Customers</h5>
+    <a
+      href="#"
+      class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+    >
+      View all
+    </a>
+  </div>
+  <div class="flow-root">
+    <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+      <li *ngFor="let user of users" class="py-3 sm:py-4">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <img
+              class="w-8 h-8 rounded-full"
+              src="https://pbs.twimg.com/profile_images/1714979648424083456/kA54qel7_400x400.jpg"
+              alt="${{ user.username }} image"
+            />
+          </div>
+          <div class="flex-1 min-w-0 ms-4">
+            <p
+              class="text-sm font-medium text-gray-900 truncate dark:text-white"
+            >
+              Ibrahim Sanusi
+            </p>
+            <p class="text-sm text-white truncate">
+              &commat;{{ user.username }}
+            </p>
+          </div>
+          <button
+            (click)="follow(user.id)"
+            class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded transition-colors hover:bg-gradient-to-br from-purple-600 to-pink-500 hover:text-white"
+          >
+            @if(user.followed){ Dejar de seguir }@else { Seguir }
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

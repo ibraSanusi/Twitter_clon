@@ -1,0 +1,57 @@
+<!-- Left section -->
+<section class="left-section flex justify-end">
+  <div class="left-section-content flex flex-col justify-between">
+    <!-- Left section title -->
+    <div>
+      <div class="py-2 px-4 flex justify-center items-center">
+        <strong class="text-3xl">Radio patio</strong>
+      </div>
+
+      <!-- Left section menu -->
+      <div class="">
+        <ul class="menu-options flex flex-col gap-2">
+          <li class="flex flex-row items-center gap-2">
+            <i>
+              <search-icon />
+            </i>
+            Explorar
+          </li>
+          <li class="flex flex-row items-center gap-2">
+            <i>
+              <profile-icon />
+            </i>
+            Perfil
+          </li>
+          <li class="flex flex-row items-center gap-2">
+            <i>
+              <setting-icon />
+            </i>
+            Settings
+          </li>
+          <li class="flex flex-row items-center gap-2"></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Logout en la seccion de la izquierda -->
+    <button (click)="logout()" class="flex flex-row items-center gap-2 py-8">
+      <i>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
+          />
+        </svg>
+      </i>
+      Logout
+    </button>
+  </div>
+</section>

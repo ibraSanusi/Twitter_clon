@@ -1,0 +1,52 @@
+<!-- Post section -->
+<article class="flex flex-row gap-3 w-full min-h-[125px] mb-8">
+  <!-- Post image -->
+  <div class="w-[40px] pt-[10px]">
+    <img
+      class="rounded-full"
+      src="https://pbs.twimg.com/profile_images/1714979648424083456/kA54qel7_400x400.jpg"
+      alt="Imagen del usuario"
+    />
+  </div>
+
+  <!-- Post publish section -->
+  <div class="flex flex-col gap-4 w-full">
+    <textarea
+      #postTextarea
+      class="w-full h-[52px] pt-[12px] pb-[12px] bg-transparent focus:outline-none resize-none overflow-y-hidden"
+      name="post"
+      id="post"
+      cols="30"
+      rows="1"
+      (input)="onInput()"
+      placeholder="What is happening?!"
+    ></textarea>
+
+    <!-- Post icons and post button -->
+    <div class="flex flex-row justify-between">
+      <!-- Icons -->
+      <ul class="flex flex-row gap-2">
+        <li>
+          <image-icon />
+        </li>
+        <li>
+          <gif-icon />
+        </li>
+        <li>
+          <smile-icon />
+        </li>
+        <li>
+          <stats-icon />
+        </li>
+      </ul>
+
+      <!-- Button -->
+      <button
+        (click)="postTweet()"
+        class="bg-blue-700 w-[78px] hover:bg-blue-600 text-white px-4 rounded-full"
+      >
+        Tweet
+      </button>
+    </div>
+  </div>
+</article>

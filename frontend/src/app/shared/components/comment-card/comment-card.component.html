@@ -1,0 +1,80 @@
+<!-- Comment Card -->
+<article class="flex flex-row gap-4 mr-6 mt-1">
+  <!-- User avatar -->
+  <img
+    class="w-7 h-7 rounded"
+    src="https://pbs.twimg.com/profile_images/1714979648424083456/kA54qel7_400x400.jpg"
+    [alt]="comment.author + ' avatar'"
+  />
+
+  <main
+    class="flex flex-col gap-1 border-solid border-gray-200 p-2 border-[1px] rounded"
+  >
+    <!-- User info -->
+    <section class="flex flex-row gap-2 items-center p-0 m-0">
+      <h5 class="items-center">{{ comment.author }}</h5>
+      <span class="text-[0.8rem] items-center">
+        {{ comment.createdAt | date : "dd/MM" }}
+      </span>
+    </section>
+
+    <p class="font-normal text-gray dark:text-white m-0 p-0">
+      {{ comment.content }}
+    </p>
+  </main>
+
+  <!-- Opciones del comentario. Se abrira al pulsarlo -->
+  <section class="ml-auto mr-0 relative">
+    <button
+      id="dropdownButton"
+      data-dropdown-toggle="dropdown"
+      class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
+      type="button"
+      (click)="handleDropDown()"
+    >
+      <span class="sr-only">Open dropdown</span>
+      <svg
+        class="w-5 h-5"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 16 3"
+      >
+        <path
+          d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
+        />
+      </svg>
+    </button>
+    <!-- Dropdown menu -->
+    <ng-container *ngIf="dropDown">
+      <div
+        id="dropdown"
+        class="absolute -left-40 z-50 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+      >
+        <ul class="py-2">
+          <li>
+            <a
+              href="#"
+              class="justify-center block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+              >Responder</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="justify-center block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+              >Dar Like</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="justify-center block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+              >Retweetear</a
+            >
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+  </section>
+</article>
