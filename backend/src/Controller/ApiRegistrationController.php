@@ -24,7 +24,7 @@ class ApiRegistrationController extends AbstractController
         $user = new User();
 
         $user->setUsername($username);
-        $user->setRoles(['USER_ROLE']);
+        $user->setRoles(['ROLE_USER']);
         // encode the plain password
         $user->setPassword(
             $userPasswordHasher->hashPassword(

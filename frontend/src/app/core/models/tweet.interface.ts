@@ -12,6 +12,7 @@ export interface Tweet {
   comments: Comment[];
   liked: boolean;
   retweeted: boolean;
+  retweetsCount: number;
   likesCount: number;
   commentsCount: number;
 }
@@ -64,4 +65,8 @@ export interface Comment {
   commentsCount: number;
   retweetsCount: number;
   createdAt: string;
+}
+
+export interface Like {
+  tweetId: number;
 }

@@ -6,7 +6,7 @@
       <!-- Left section title -->
       <div class="h-full">
         <header class="py-2 px-4 flex justify-center items-center mb-4">
-          <strong class="text-3xl">Radio patio</strong>
+          <strong class="text-3xl text-gradient">Radio patio</strong>
         </header>
 
         <!-- Left section menu -->
@@ -59,7 +59,7 @@
   <section class="rounded h-auto">
     <!-- Header de la seccion central -->
     <header class="flex flex-row justify-between py-2">
-      <strong class="text-3xl">Home</strong>
+      <strong class="text-3xl text-gradient">Home</strong>
       <star-icon />
     </header>
 
@@ -111,7 +111,7 @@
           <!-- Button -->
           <button
             (click)="postTweet()"
-            class="bg-blue-700 w-[78px] hover:bg-blue-600 text-white px-4 rounded-full"
+            class="bg-blue-100 text-blue-800 w-[78px] transition-colors hover:bg-gradient-to-br from-purple-600 to-pink-500 hover:text-white px-4 rounded-full"
           >
             Tweet
           </button>
@@ -153,22 +153,26 @@
           <comment-icon />
           <span class="text-xs">{{ tweet.commentsCount }}</span>
         </button>
-        <button class="flex flex-row gap-1 items-center hover:text-red-800">
+        <button
+          (click)="like(tweet.id)"
+          class="flex flex-row gap-1 items-center hover:text-red-800"
+        >
           <like-icon [liked]="tweet.liked" />
-          @if(tweet.retweeted) {
+          @if(tweet.liked) {
           <span class="text-xs text-red-600">{{ tweet.likesCount }}</span>
           }@else {
           <span class="text-xs">{{ tweet.likesCount }}</span>
           }
         </button>
-        <button class="flex flex-row gap-1 items-center hover:text-green-600">
+        <button
+          (click)="retweet(tweet.id)"
+          class="flex flex-row gap-1 items-center hover:text-green-600"
+        >
           <retweet-icon [retweeted]="tweet.retweeted" />
           @if(tweet.retweeted) {
-          <span class="text-xs text-green-400">{{
-            tweet.retweets.length
-          }}</span>
+          <span class="text-xs text-green-400">{{ tweet.retweetsCount }}</span>
           }@else {
-          <span class="text-xs">{{ tweet.retweets.length }}</span>
+          <span class="text-xs">{{ tweet.retweetsCount }}</span>
           }
         </button>
       </section>
@@ -233,14 +237,26 @@
                 class="flex flex-row gap-1 items-center hover:text-red-800"
               >
                 <like-icon [liked]="comment.liked" />
+                @if(comment.liked) {
+                <span class="text-xs text-red-800">{{
+                  comment.likesCount
+                }}</span>
+                }@else {
                 <span class="text-xs">{{ comment.likesCount }}</span>
+                }
               </button>
               <button
                 (click)="retweetComment(tweet.id, comment.id)"
                 class="flex flex-row gap-1 items-center hover:text-green-600"
               >
                 <retweet-icon [retweeted]="comment.retweeted" />
+                @if(comment.retweeted) {
+                <span class="text-xs text-green-600">{{
+                  comment.retweetsCount
+                }}</span>
+                }@else {
                 <span class="text-xs">{{ comment.retweetsCount }}</span>
+                }
               </button>
             </div>
           </article>
@@ -251,20 +267,22 @@
   </section>
 
   <!-- Right section -->
-  <section class="flex flex-col gap-4 right-section py-2 px-4">
+  <section class="flex flex-col gap-4 right-section px-6">
     <div class="w-[305px] h-full flex flex-col gap-5">
-      <nav
-        class="w-full h-[35px] flex flex-row items-center bg-[#444140] text-white rounded-md"
-      >
-        <i class="p-3">
-          <search-icon />
-        </i>
-        <input
-          class="border-none focus:border-none bg-transparent w-full py-2 pr-2 focus:outline-none text-white"
-          type="search"
-          placeholder="Busca lo que quieras en Radio patio"
-        />
-      </nav>
+      <div class="w-full bg-[#1e1e24] py-2 sticky top-0">
+        <nav
+          class="w-full h-[35px] flex flex-row items-center bg-[#444140] text-white rounded-md"
+        >
+          <i class="p-3">
+            <search-icon />
+          </i>
+          <input
+            class="search-input border-none focus:border-none bg-transparent w-full py-2 pr-2 focus:outline-none text-white"
+            type="search"
+            placeholder="Busca lo que quieras en Radio patio"
+          />
+        </nav>
+      </div>
 
       <h2 class="text-xl w-full">Echa un vistazo a estos perfiles</h2>
       <!-- Recomendated user card -->

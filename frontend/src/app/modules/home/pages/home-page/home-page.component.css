@@ -4,3 +4,39 @@
     border-style: solid;
     border-image: linear-gradient(to bottom right, #642bff, #ff22e6); /* Establece el gradiente para el borde */
 }
+
+.text-gradient {
+    background: linear-gradient(to right, #642bff, #ff22e6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+textarea {
+    /* Reset de estilos */
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    /* Otros estilos opcionales según tus necesidades */
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    /* Agrega cualquier otro estilo que desees aquí */
+}
+
+textarea:focus {
+/* Anula cualquier estilo de resaltado al enfocar */
+border-color: transparent;
+box-shadow: none;
+/* Otros estilos opcionales según tus necesidades */
+}
+
+.search-input {
+    /* Anula cualquier estilo de resaltado al enfocar */
+    border-color: transparent;
+    box-shadow: none;
+    /* Otros estilos opcionales según tus necesidades */
+}
+  
+  

@@ -33,6 +33,7 @@ export class TweetCardComponent {
     comments: [],
     liked: false,
     retweeted: false,
+    retweetsCount: 0,
     likesCount: 0,
     commentsCount: 0,
   };

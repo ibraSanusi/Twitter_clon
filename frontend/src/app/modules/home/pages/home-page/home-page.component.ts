@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 import {
   Comment,
   CommentContent,
+  Like,
   LikeComment,
+  Retweet,
   RetweetComment,
   Tweet,
   TweetContent,
@@ -128,7 +130,7 @@ export class HomePageComponent implements OnInit {
     textarea.style.height = textarea.scrollHeight + 2 + 'px'; // Agrega un pequeño espacio adicional
   }
 
-  // Comentar
+  // Comentar un tweet
   comment(tweetId: number) {
     const textarea = this.commentPostarea.nativeElement;
     const contentContent: string = textarea.value.trim();
@@ -172,6 +174,7 @@ export class HomePageComponent implements OnInit {
       !this.tweetCommentVisibility[tweetId];
   }
 
+  // Dar like o unlike a un tweet
   likeComment(tweetId: number, commentId: number) {
     const likeComment: LikeComment = {
       commentId: commentId,
@@ -203,6 +206,7 @@ export class HomePageComponent implements OnInit {
     }
   }
 
+  // Dar retweet o quitarselo a un tweet
   retweetComment(tweetId: number, commentId: number) {
     const retweetComment: RetweetComment = {
       commentId: commentId,
@@ -233,5 +237,62 @@ export class HomePageComponent implements OnInit {
         comment.retweeted = !comment.retweeted;
       }
     }
+  }
+
+  // Dar like a un tweet o eliminarlo
+  like(tweetId: number) {
+    const like: Like = {
+      tweetId: tweetId,
+    };
+
+    const tweet = this.tweets.find((tweet) => tweet.id === tweetId);
+
+    if (!tweet) return;
+
+    let url = '';
+    let quantity = 0;
+
+    if (!tweet.liked) {
+      url = '/api/like';
+      quantity = 1;
+    } else {
+      url = '/api/delete/like';
+      quantity = -1;
+    }
+
+    this.tweetService.post(like, url).subscribe((res) => {
+      tweet.likesCount += quantity;
+      tweet.liked = !tweet.liked;
+    });
+  }
+
+  // Dar retweet a un tweet o eliminarlo
+  retweet(tweetId: number) {
+    const retweet: {
+      tweetId: number;
+    } = {
+      tweetId: tweetId,
+    };
+
+    const tweet = this.tweets.find((tweet) => tweet.id === tweetId);
+
+    if (!tweet) return;
+
+    let url = '';
+    let quantity = 0;
+
+    if (!tweet.retweeted) {
+      url = '/api/retweet';
+      quantity = 1;
+    } else {
+      url = '/api/delete/retweet';
+      quantity = -1;
+    }
+
+    this.tweetService.post(retweet, url).subscribe((res) => {
+      tweet.retweetsCount += quantity;
+      console.log(tweet.retweetsCount);
+      tweet.retweeted = !tweet.retweeted;
+    });
   }
 }

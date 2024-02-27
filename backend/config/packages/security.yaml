@@ -31,16 +31,16 @@ security:
         login_path: app_login
         check_path: app_login
         # Supuestamente te permite redirigir despues de haber iniciado sesion
-        default_target_path: app_following
+        default_target_path: admin
         always_use_default_target_path: true
       json_login:
         check_path: app_api_login
         username_path: username
         password_path: password
       logout:
-        path: app_api_logout
+        path: app_logout
         # where to redirect after logout
-        target: app_api_res
+        target: app_login
 
       remember_me:
         secret: "%kernel.secret%"

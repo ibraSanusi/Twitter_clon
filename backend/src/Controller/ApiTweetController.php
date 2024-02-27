@@ -118,6 +118,7 @@ class ApiTweetController extends AbstractController
             'comments' => $comments,
             'liked' => $isLiked,
             'retweeted' => $isRetweeted,
+            'retweetsCount' => count($retweets),
             'likesCount' => count($tweet->getLikesCount()),
             'commentsCount' => count($comments),
         ];

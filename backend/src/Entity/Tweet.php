@@ -20,7 +20,7 @@ class Tweet
     private ?string $content = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $publishDate = null;
+    private ?\DateTime $publishDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'tweets')]
     #[ORM\JoinColumn(nullable: false)]
@@ -59,12 +59,12 @@ class Tweet
         return $this;
     }
 
-    public function getPublishDate(): ?\DateTimeInterface
+    public function getPublishDate(): ?\DateTime
     {
         return $this->publishDate;
     }
 
-    public function setPublishDate(\DateTimeInterface $publishDate): static
+    public function setPublishDate(\DateTime $publishDate): static
     {
         $this->publishDate = $publishDate;
 
