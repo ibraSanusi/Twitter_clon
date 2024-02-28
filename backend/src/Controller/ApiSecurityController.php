@@ -51,10 +51,28 @@ class ApiSecurityController extends AbstractController
     #[Route('/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // get the login error if there is one
+        // Verificar si se ha enviado el formulario de inicio de sesión
+        if ($this->getUser()) {
+            $user = $this->getUser();
+
+            if (!$user instanceof User) {
+                return new Response('No es un usuario valido.');
+            }
+
+            $roles = $user->getRoles();
+
+            // Redirigir al dashboard correspondiente según el rol del usuario
+            if ($roles[0] === 'ROLE_ADMIN') {
+                return $this->redirectToRoute('admin');
+            } else {
+                return $this->redirectToRoute('prueba');
+            }
+        }
+
+        // Obtener el error de inicio de sesión, si lo hay
         $error = $authenticationUtils->getLastAuthenticationError();
 
-        // last username entered by the user
+        // Último nombre de usuario ingresado por el usuario
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('login/index.html.twig', [
@@ -64,10 +82,17 @@ class ApiSecurityController extends AbstractController
         ]);
     }
 
+
     #[Route('/logout', name: 'app_logout')]
     public function logout(): Response
     {
         // Este método nunca se ejecutará ya que Symfony manejará automáticamente el cierre de sesión
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+
+    #[Route('/prueba', name: 'prueba')]
+    public function example(): Response
+    {
+        return new Response('Eureca.');
     }
 }
