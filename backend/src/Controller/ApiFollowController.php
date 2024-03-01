@@ -131,4 +131,24 @@ class ApiFollowController extends AbstractController
 
         return new JsonResponse($recomendatedUsers);
     }
+
+    // Devolver top 5 usuarios mas seguidos
+    #[Route('/most/followed', name: 'most_followed')]
+    public function getTopFiveFollowed(FollowerRepository $fr, UserRepository $ur): JsonResponse
+    {
+        // Obtener todos los usuarios del repositorio
+        $allUsers = $ur->findAll();
+
+        $responseJson = [];
+
+        foreach ($allUsers as $user) {
+            $responseJson[] = [
+                'id' => $user->getId(),
+                'username' => $user->getUsername(),
+                'followersCount' => count($user->getFollowing()), // Tenemos que sacar cuantas veces sale el id de ese usuario en following
+            ];
+        }
+
+        return new JsonResponse($responseJson, Response::HTTP_ACCEPTED);
+    }
 }

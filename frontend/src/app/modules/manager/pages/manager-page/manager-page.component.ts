@@ -1,25 +1,49 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { UserRanking } from '@core/models/user.interface';
+import { ManagerService } from '@modules/manager/services/manager.service';
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-manager-page',
-  standalone: true,
-  imports: [],
   templateUrl: './manager-page.component.html',
   styleUrls: ['./manager-page.component.css'],
 })
 export class ManagerPageComponent implements OnInit {
+  users: UserRanking[] = [];
+
+  constructor(private http: ManagerService) {}
+
   ngOnInit(): void {
-    this.createChart();
+    this.getTopRanking();
   }
 
-  createChart() {
+  getTopRanking(): void {
+    this.http.get('/api/most/followed').subscribe((users: UserRanking[]) => {
+      // Ordenar los usuarios por followersCount de forma descendente
+      const orderedUsers: UserRanking[] = users.sort(
+        (a, b) => b.followersCount - a.followersCount
+      );
+      this.users = orderedUsers;
+
+      this.createChart(orderedUsers);
+    });
+  }
+
+  createChart(users: UserRanking[]): void {
+    const labels: string[] = [];
+    const followersCount: number[] = [];
+
+    users.forEach((user) => {
+      labels.push(user.username);
+      followersCount.push(user.followersCount);
+    });
+
     const myChart = new Chart('myChart', {
       type: 'bar',
       data: {
-        labels: ['Enero', 'Febrero', 'Marzo'],
-        datasets: [{ label: 'Ventas', data: [10, 20, 30] }],
+        labels: labels,
+        datasets: [{ label: 'Followers Count', data: followersCount }],
       },
       options: {
         responsive: true,
@@ -29,7 +53,7 @@ export class ManagerPageComponent implements OnInit {
           },
           title: {
             display: true,
-            text: 'Chart.js Bar Chart',
+            text: 'Top 5 Users by Followers Count',
           },
         },
       },

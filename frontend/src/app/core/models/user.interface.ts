@@ -9,3 +9,9 @@ export interface IUser {
   roles: string[];
   followed: boolean;
 }
+
+export interface UserRanking {
+  id: number;
+  username: string;
+  followersCount: number;
+}

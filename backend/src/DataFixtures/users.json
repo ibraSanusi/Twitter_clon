@@ -1,0 +1,259 @@
+{
+    "users": [
+      {
+        "username": "johndoe1985",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "sarahsmith89",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "alexbrown22",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "emilywilson_",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "chris_jackson",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "lisa_miller12",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "mike_roberts",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "sophie_clark",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "david_turner79",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "amy_wright23",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "kevinanderson_",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "anna_carter456",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "mark_jenkins",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "laura_taylor88",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "samuel_adams",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "olivia_martin_",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "nathan_hall45",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "lucy_davis_",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "brian_evans90",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      },
+      {
+        "username": "jessica_lee23",
+        "password": "Idele227",
+        "roles": ["ROLE_USER"]
+      }
+    ],
+    "tweets": [
+      {
+        "content": "This is my first tweet!",
+        "userId": 1,
+        "publishDate": "2023-01-01 08:00:00"
+      },
+      {
+        "content": "Just finished a great book!",
+        "userId": 2,
+        "publishDate": "2023-01-01 10:00:00"
+      },
+      {
+        "content": "Excited about my new job!",
+        "userId": 3,
+        "publishDate": "2023-01-02 12:00:00"
+      },
+      {
+        "content": "Celebrating my birthday today!",
+        "userId": 4,
+        "publishDate": "2023-01-03 15:00:00"
+      },
+      {
+        "content": "Traveling to Paris next week!",
+        "userId": 5,
+        "publishDate": "2023-01-04 08:00:00"
+      },
+      {
+        "content": "Just adopted a puppy!",
+        "userId": 6,
+        "publishDate": "2023-01-05 10:00:00"
+      },
+      {
+        "content": "Enjoying a cup of coffee on a rainy day.",
+        "userId": 7,
+        "publishDate": "2023-01-06 12:00:00"
+      },
+      {
+        "content": "Attending a concert tonight!",
+        "userId": 8,
+        "publishDate": "2023-01-07 15:00:00"
+      },
+      {
+        "content": "Finished my first marathon!",
+        "userId": 9,
+        "publishDate": "2023-01-08 08:00:00"
+      },
+      {
+        "content": "Just moved into a new apartment!",
+        "userId": 10,
+        "publishDate": "2023-01-09 10:00:00"
+      },
+      {
+        "content": "Starting a new project at work!",
+        "userId": 11,
+        "publishDate": "2023-01-10 12:00:00"
+      },
+      {
+        "content": "Traveling to Japan next month!",
+        "userId": 12,
+        "publishDate": "2023-01-11 15:00:00"
+      },
+      {
+        "content": "Celebrating my anniversary today!",
+        "userId": 13,
+        "publishDate": "2023-01-12 08:00:00"
+      },
+      {
+        "content": "Just graduated from college!",
+        "userId": 14,
+        "publishDate": "2023-01-13 10:00:00"
+      },
+      {
+        "content": "Learning to play the guitar.",
+        "userId": 15,
+        "publishDate": "2023-01-14 12:00:00"
+      },
+      {
+        "content": "Trying out a new recipe for dinner.",
+        "userId": 16,
+        "publishDate": "2023-01-15 15:00:00"
+      },
+      {
+        "content": "Watching my favorite TV show.",
+        "userId": 17,
+        "publishDate": "2023-01-16 08:00:00"
+      },
+      {
+        "content": "Going hiking this weekend!",
+        "userId": 18,
+        "publishDate": "2023-01-17 10:00:00"
+      },
+      {
+        "content": "Just got a promotion at work!",
+        "userId": 19,
+        "publishDate": "2023-01-18 12:00:00"
+      },
+      {
+        "content": "Celebrating my friend's birthday tonight!",
+        "userId": 20,
+        "publishDate": "2023-01-19 15:00:00"
+      }
+    ],
+    "follows": [
+      {
+        "follower_id": 1,
+        "following_id": 2,
+        "following_date": "2023-01-01T08:00:00Z"
+      },
+      {
+        "follower_id": 1,
+        "following_id": 3,
+        "following_date": "2023-01-02T10:00:00Z"
+      },
+      {
+        "follower_id": 2,
+        "following_id": 4,
+        "following_date": "2023-01-03T09:00:00Z"
+      },
+      {
+        "follower_id": 3,
+        "following_id": 5,
+        "following_date": "2023-01-04T11:00:00Z"
+      },
+      {
+        "follower_id": 4,
+        "following_id": 1,
+        "following_date": "2023-01-05T12:00:00Z"
+      },
+      {
+        "follower_id": 5,
+        "following_id": 2,
+        "following_date": "2023-01-06T13:00:00Z"
+      },
+      {
+        "follower_id": 6,
+        "following_id": 3,
+        "following_date": "2023-01-07T14:00:00Z"
+      },
+      {
+        "follower_id": 7,
+        "following_id": 4,
+        "following_date": "2023-01-08T15:00:00Z"
+      },
+      {
+        "follower_id": 8,
+        "following_id": 5,
+        "following_date": "2023-01-09T16:00:00Z"
+      },
+      {
+        "follower_id": 9,
+        "following_id": 6,
+        "following_date": "2023-01-10T17:00:00Z"
+      } 
+    ]
+  }
+  

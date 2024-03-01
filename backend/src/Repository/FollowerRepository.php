@@ -34,6 +34,22 @@ class FollowerRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
+    // Sacar usuario y cantidad de followers ordenado por cantidad de seguidos
+    public function getTopFiveFollowed()
+    {
+        $qb = $this->createQueryBuilder('f')
+            ->select('f.following', 'COUNT(f.follower) as follower_count')
+            ->groupBy('f.following')
+            ->orderBy('follower_count', 'DESC')
+            ->setMaxResults(5); // Obtener los primeros cinco resultados
+
+        $query = $qb->getQuery();
+
+        // Obtener los resultados
+        return $query->getResult();
+    }
+
+
     //    /**
     //     * @return Follower[] Returns an array of Follower objects
     //     */
