@@ -79,7 +79,13 @@
     <!-- Footer -->
     <footer class="flex flex-row space-x-2">
       <strong class="font-normal">¿No tienes cuenta?</strong>
-      <a class="font-bold text-blue-500" href="#">Sign Up</a>
+      <a
+        class="font-bold text-blue-500"
+        [routerLink]="['/register']"
+        routerLinkActive="router-link-active"
+      >
+        Sign Up
+      </a>
     </footer>
   </section>
 </main>

@@ -1,6 +1,7 @@
 export interface LoginUser {
   username: string;
   password: string;
+  roles: string[];
 }
 
 export interface IUser {
