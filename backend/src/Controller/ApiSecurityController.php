@@ -22,6 +22,7 @@ class ApiSecurityController extends AbstractController
             'data' => [
                 'username' => $user->getUsername(),
                 'password' => $user->getPassword(),
+                'roles' => $user->getRoles(),
             ]
         ]);
     }
