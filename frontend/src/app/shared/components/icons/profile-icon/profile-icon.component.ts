@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'profile-icon',
@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './profile-icon.component.html',
   styleUrl: './profile-icon.component.css',
 })
-export class ProfileIconComponent {}
+export class ProfileIconComponent {
+  @Input() size: number = 0;
+}

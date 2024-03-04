@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'search-icon',
@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './search-icon.component.html',
   styleUrl: './search-icon.component.css',
 })
-export class SearchIconComponent {}
+export class SearchIconComponent {
+  @Input() size: number = 0;
+}

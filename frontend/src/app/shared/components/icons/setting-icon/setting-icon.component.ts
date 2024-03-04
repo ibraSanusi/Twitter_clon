@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'setting-icon',
@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './setting-icon.component.html',
   styleUrl: './setting-icon.component.css',
 })
-export class SettingIconComponent {}
+export class SettingIconComponent {
+  @Input() size: number = 0;
+}
