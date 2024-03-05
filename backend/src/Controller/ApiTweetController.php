@@ -10,6 +10,7 @@ use App\Repository\LikeCommentRepository;
 use App\Repository\LikeRepository;
 use App\Repository\RetweetCommentRepository;
 use App\Repository\RetweetRepository;
+use App\Repository\TweetRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -1,13 +1,13 @@
 <main
-  class="flex flex-row xl:grid xl:grid-cols-3 min-h-screen text-white bg-[#1e1e24]"
+  class="flex flex-row xl:grid xl:grid-cols-3 min-h-screen overflow-auto text-white bg-[#1e1e24]"
 >
   <!-- Seccion de la izquierda -->
   <!-- Left section -->
-  <section class="left-section xl:flex xl:flex-col xl:justify-end md:px-6">
+  <section class="left-section xl:flex xl:flex-col xl:justify-end md:px-6 px-4">
     <!-- Left section title -->
-    <div class="h-full py-4">
+    <div class="h-full max-md:py-4">
       <header
-        class="py-2 px-4 hidden xl:block justify-center items-center mb-4"
+        class="py-2 px-4 hidden w-full xl:flex justify-center items-center mb-4"
       >
         <strong class="text-3xl text-gradient">Radio patio</strong>
       </header>
@@ -36,7 +36,7 @@
       </nav>
     </div>
     <!-- Logout en la seccion de la izquierda -->
-    <button (click)="logout()" class="flex flex-row items-center gap-2 py-8">
+    <!-- <button (click)="logout()" class="flex flex-row items-center gap-2 py-8">
       <i>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -54,11 +54,11 @@
         </svg>
       </i>
       Logout
-    </button>
+    </button> -->
   </section>
 
   <!-- Seccion del centro. Aqui estaran las seccion del post y los tweets -->
-  <section class="rounded h-auto">
+  <section class="rounded h-auto max-xl:justify-center max-xl:mr-8">
     <!-- Header de la seccion central -->
     <header class="flex flex-row justify-between py-2">
       <strong class="text-3xl text-gradient">Home</strong>
@@ -75,6 +75,7 @@
           class="rounded-full"
           src="https://pbs.twimg.com/profile_images/1714979648424083456/kA54qel7_400x400.jpg"
           alt="Imagen del usuario"
+          title="{{ userSession }} avatar"
         />
       </div>
 
@@ -129,8 +130,9 @@
       <header class="flex flex-row gap-2">
         <img
           src="https://www.github.com/midudev.png"
-          alt=""
+          alt="Imagen del usuario {{ tweet.author }}"
           class="w-[40px] h-[40px] rounded"
+          title="{{ tweet.author }} avatar"
         />
         <div class="flex flex-col">
           <span class="text-sm">&commat;{{ tweet.author }}</span>
@@ -141,7 +143,7 @@
       <img
         class="rounded-2xl"
         src="https://64.media.tumblr.com/60b215e4908be05b31a6afbcaa8d3d10/271fda2b7ddef658-0f/s1280x1920/d9b3481f3bab57fd49561b908e6db6e03073eaa3.jpg"
-        alt=""
+        alt="Imagen subida por {{ tweet.author }}"
       />
 
       <p>{{ tweet.content }}</p>
@@ -294,3 +296,33 @@
     </div>
   </section>
 </main>
+
+<!-- Footer que se muestra si no se ha iniciado la sesion -->
+@if(!session) {
+<footer
+  class="flex flex-col justify-center min-h-40 min-w-full space-y-8 bg-purple-500 fixed bottom-0 left-0"
+>
+  <p
+    class="text-white mx-auto text-pretty justify-center items-center max-xl:px-2.5"
+  >
+    Únete a más de 100 millones de personas que ya usan Radio Patio para
+    encontrar comunidades interesantes y conocer gente nueva.
+  </p>
+  <div class="flex flex-row mx-auto gap-8">
+    <button
+      [routerLink]="['/register']"
+      routerLinkActive="router-link-active"
+      class="py-2 px-10 bg-black text-white"
+    >
+      Registrate
+    </button>
+    <button
+      [routerLink]="['/auth/login']"
+      routerLinkActive="router-link-active"
+      class="py-2 px-10 bg-purple-300 text-white"
+    >
+      Inicia sesión
+    </button>
+  </div>
+</footer>
+}

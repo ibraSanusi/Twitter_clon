@@ -24,4 +24,7 @@ export const routes: Routes = [
         (m) => m.RegisterModule
       ),
   },
+  // Otras rutas de tu aplicación
+  { path: '', redirectTo: 'home', pathMatch: 'full' }, // Redirigir a '/home' si no se ha especificado ninguna otra ruta
+  { path: '**', redirectTo: 'home' }, // Redirigir a '/home' si la ruta especificada no coincide con ninguna otra ruta definida
 ];

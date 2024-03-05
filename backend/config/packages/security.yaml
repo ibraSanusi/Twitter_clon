@@ -48,6 +48,17 @@ security:
         lifetime: 604800
         path: /
         always_remember_me: true
+    # Agrega un firewall para el controlador check_session
+    check_session:
+      pattern: ^/anonymous/checkSession
+      stateless: true
+      security: false # Esta opción permite el acceso anónimo
+
+    # Agrega un firewall para el controlador showAllTweets
+    show_all_tweets:
+      pattern: ^/api/showalltweets
+      stateless: true
+      security: false # Esta opción permite el acceso anónimo
 
       # activate different ways to authenticate
       # https://symfony.com/doc/current/security.html#the-firewall

@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\User;
+use App\Repository\TweetRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -90,5 +92,76 @@ class ApiSecurityController extends AbstractController
     public function example(): Response
     {
         return new Response('Eureca.');
+    }
+
+    // Comprobar si esta la sesion iniciada
+    #[Route('/anonymous/checkSession', name: 'check_session')]
+    public function checkSession(): JsonResponse
+    {
+        $session = false;
+
+        if ($this->getUser()) $session = true;
+
+        return new JsonResponse($session);
+    }
+
+    // Mostrar todos los tweets
+    #[Route('/showalltweets', name: 'show_all_tweets')]
+    public function showAlltweets(TweetRepository $tr): JsonResponse
+    {
+        $tweets = $tr->findAll();
+
+        $tweetsResponse = [];
+
+        foreach ($tweets as $tweet) {
+            // Sacar los retweets del tweet
+            $retweets = [];
+            foreach ($tweet->getRetweets() as $retweet) {
+                $retweets[] = [
+                    'id' => $retweet->getId(),
+                    'tweet' => $retweet->getTweet()->getId(),
+                    'createdAt' => $retweet->getRetweetDate()->format('Y-m-d H:i:s'),
+                    'userId' => $retweet->getUser()->getId(),
+                ];
+            }
+
+            // Sacar los comentarios del tweet
+            $comments = [];
+            foreach ($tweet->getComments() as $comment) {
+                if (!$comment instanceof Comment) return null;
+
+                $comments[] = [
+                    'id' => $comment->getId(),
+                    'author' => $comment->getAuthor()->getUsername(),
+                    'content' => $comment->getContent(),
+                    'parentComment' => $comment->getParentComment(),
+                    'liked' => false,
+                    'retweeted' => false,
+                    'likesCount' => count($comment->getLikeComments()) ? count($comment->getLikeComments()) : 0,
+                    'commentsCount' => 0, // TODO: sacar los comentarios que tienen como parentComment este comentario (CommentRepository)
+                    'retweetsCount' => count($comment->getRetweetComments()) ? count($comment->getRetweetComments()) : 0,
+                    'createdAt' => $comment->getCreatedAt()->format('Y-m-d H:i:s'),
+                ];
+            }
+
+            $tweetsResponse[] = [
+                'id' => $tweet->getId(),
+                'content' => $tweet->getContent(),
+                'author' => $tweet->getUser()->getUsername(),
+                'createdAt' => $tweet->getPublishDate()->format('Y-m-d H:i:s'),
+                'retweets' => $retweets,
+                'comments' => $comments,
+                'liked' => false,
+                'retweeted' => false,
+                'retweetsCount' => count($retweets),
+                'likesCount' => count($tweet->getLikesCount()),
+                'commentsCount' => 0,
+            ];
+        }
+
+        return new JsonResponse([
+            'userSession' => 'none',
+            'data' => $tweetsResponse,
+        ]);
     }
 }

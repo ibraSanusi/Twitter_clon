@@ -1,6 +1,6 @@
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   Comment,
   CommentContent,
@@ -53,6 +53,7 @@ import { TweetService } from '@shared/services/tweet.service';
     DatePipe,
     NgIf,
     UserRecomendatedCardComponent,
+    RouterLink,
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
@@ -61,6 +62,7 @@ export class HomePageComponent implements OnInit {
   userSession: string = '';
   tweets: Tweet[] = [];
   canComment: number = 0;
+  session: boolean = true;
   // Declaración de la variable en el componente
   tweetCommentVisibility: { [key: number]: boolean } = {};
   @ViewChild('commentTextarea') commentPostarea!: ElementRef;
@@ -73,7 +75,29 @@ export class HomePageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getFollowingTweets();
+    // Verifica la sesión utilizando el servicio de autenticación
+    this.authService.checkSession('/anonymous/checkSession').subscribe(
+      (session) => {
+        console.log('Session: ' + session);
+        this.session = session;
+        if (session) {
+          this.getFollowingTweets();
+        } else {
+          this.getAllTweets();
+        }
+      },
+      (error) => {
+        console.error('Error al verificar la sesión:', error);
+      }
+    );
+  }
+
+  getAllTweets() {
+    this.tweetService.get('/showalltweets').subscribe((res: TweetResponse) => {
+      this.userSession = res.userSession;
+      this.tweets = res.data;
+      console.log(res.data);
+    });
   }
 
   // Recupera los tweets de los seguidos
@@ -89,7 +113,7 @@ export class HomePageComponent implements OnInit {
 
   /// TODO: Cerrar sesion, pero no funciona bien por el momento
   logout() {
-    this.authService.logout('api/logout').subscribe((res) => {
+    this.authService.logout('/api/logout').subscribe((res) => {
       console.log('Se cerro sesion correctamente: ' + res);
       console.log(document.cookie.valueOf());
       // window.location.reload();
