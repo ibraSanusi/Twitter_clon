@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './pages/home-page/home-page.component';
+import { AccesibilityComponent } from './pages/accesibility/accesibility.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomePageComponent,
+    component: AccesibilityComponent,
   },
   {
     path: '**',
-    redirectTo: '/home',
+    redirectTo: '/accesibility',
   },
 ];
 
@@ -17,4 +17,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class HomeRoutingModule {}
+export class AccesibilityRoutingModule {}
