@@ -10,9 +10,9 @@ use App\Repository\LikeCommentRepository;
 use App\Repository\LikeRepository;
 use App\Repository\RetweetCommentRepository;
 use App\Repository\RetweetRepository;
-use App\Repository\TweetRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,18 +25,21 @@ class ApiTweetController extends AbstractController
 {
     private LikeCommentRepository $lcr;
     private RetweetCommentRepository $rcr;
+    private $logger;
 
-    public function __construct(LikeCommentRepository $lcr, RetweetCommentRepository $rcr)
+
+    public function __construct(LikeCommentRepository $lcr, RetweetCommentRepository $rcr, LoggerInterface $logger = null)
     {
         $this->lcr = $lcr;
         $this->rcr = $rcr;
+        $this->logger = $logger;
     }
 
     // Mostrar todos los tweets del usuario a los que sigue el usuario en sesion
     // Se debe devolver un campo likeed que indique si ese tweet ya ha sido likeado o no por el usuario en sesion
     // Este campo tendra el identificador del usuario
     #[Route('/following/tweets', name: 'app_api_following_tweet', methods: ['GET'])]
-    public function getFollowingTweets(Security $security, LikeRepository $lr, RetweetRepository $rr): JsonResponse
+    public function getFollowingTweets(LoggerInterface $logger, Security $security, LikeRepository $lr, RetweetRepository $rr): JsonResponse
     {
         // Obtener el usuario autenticado
         $user = $security->getUser();
@@ -45,6 +48,12 @@ class ApiTweetController extends AbstractController
         if (!$user instanceof User) {
             return new JsonResponse(['error' => 'Usuario no autenticado'], Response::HTTP_UNAUTHORIZED);
         }
+
+        // log messages can also contain placeholders, which are variable names
+        // wrapped in braces whose values are passed as the second argument
+        $this->logger->info('User {userId} is logged in', [
+            'userId' => $user->getId(),
+        ]);
 
         // Sacar los usuarios a los que sigue
         $followingUsers = $user->getFollowers();
